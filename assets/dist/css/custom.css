@@ -1,0 +1,117 @@
+th, td {
+    font-size: .8em;
+    text-transform: uppercase;
+    vertical-align: middle;
+    line-height: 30px;
+}
+
+.forp {
+    border: none;
+    border-bottom: 1px dashed #666;
+    background-color: #e9ecef;
+    font-size: .8em;
+}
+
+.fset {
+    border: 1px solid #666 !important;
+}
+
+legend {
+    font-size: 1em;
+}
+
+@keyframes fa-blink {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 50; }
+}
+
+.fa-blink {
+  -webkit-animation: fa-blink .75s linear infinite;
+  -moz-animation: fa-blink .75s linear infinite;
+  -ms-animation: fa-blink .75s linear infinite;
+  -o-animation: fa-blink .75s linear infinite;
+  animation: fa-blink .1s linear infinite;
+}
+
+.rotate:hover
+{
+        -webkit-transform: rotateZ(-30deg);
+        -ms-transform: rotateZ(-30deg);
+        transform: rotateZ(-30deg);
+}
+
+.circle:hover
+{
+        border-radius:50%;
+}
+
+.imagem1{
+    transition: all 1s;
+    cursor: pointer;
+}
+
+.imagem1:hover{
+    -webkit-transform: rotateZ(360deg);
+    transform: rotateZ(360deg);
+}
+.imagem3{
+    transition: all 0.5s;
+    cursor: pointer;
+}
+
+.imagem3:hover{
+    -webkit-transform: scale(1.5);
+    transform: scale(1.5);
+    background: #272C33
+}
+
+.tab-pane {
+    font-size: .9em;
+    font-weight: normal;
+}
+
+.aumentaimg {
+    transition: all 0.5s;
+    cursor: pointer;
+}
+
+.aumentaimg:hover {
+    -webkit-transform: scale(4.5);
+    transform: scale(2.5);
+    margin-top: -80px;
+    margin-left: 75px;
+    /* margin-left: 25px; */
+}
+
+.card-header {
+    background-color: #fff;
+}
+
+.card-body {
+    background-color: #fcfcfc;
+    margin-top: -1.50rem !important;
+}
+
+.sair {
+    background-color: #494E54;
+    border-radius: 3px;
+}
+
+.alert-warning {
+    color: #1f2d3d;
+    background-color: #F2F5A9;
+    border-color: #F3E2A9;
+}
+
+.alert-success {
+    color: #1f2d3d;
+    background-color: #D0F5A9;
+    border-color: #BCF5A9;
+}
+
+.alert-danger {
+    color: #1f2d3d;
+    background-color: #F5BCA9;
+    border-color: #F5A9A9;
+}
