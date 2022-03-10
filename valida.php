@@ -31,7 +31,7 @@ if ($btnLogin) {
                 $_SESSION['email'] = $row_usuario['email'];
                 $_SESSION['niveis_acesso_id'] = $row_usuario['niveis_acesso_id'];
                 $_SESSION['ordem'] = $row_niv_acesso['ordem'];
-                header("Location: index.php");
+                header("Location: visualizar/home");
             } else {
                 $_SESSION['msg'] = "<div class='alert alert-danger' style='font-size: 0.8em;text-align: center;'>Login ou senha incorreto</div>";
                 header("Location: login.php");

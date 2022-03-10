@@ -20,6 +20,15 @@ if (!isset($seguranca)) {
     </div><!-- /.row -->
   </div><!-- /.container-fluid -->
 </div>
+<?php
+// Mensagens de erro e sucesso
+if (isset($_SESSION['msg'])) {
+    echo '<div class="col-md-12" style="margin-top:-25px !important;">';
+    echo $_SESSION['msg'];
+    unset($_SESSION['msg']);
+    echo '</div>';
+}
+?>
 <!-- /.content-header -->
 
 <!-- Aqui aparecem os relatórios do dashboard -->

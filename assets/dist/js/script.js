@@ -103,7 +103,7 @@ function salvarNivel(e){
 function editarUser(id) {
 	
 	$.ajax({
-		url: "../processa/UserEdit.php",
+		url: "../editar/edit_usuarios.php",
 		type:'POST',
 		data:{id:id},
 		beforeSend:function(){
@@ -132,7 +132,7 @@ function salvarUser(e){
 	var id = $(this).find(':input[name=id]').val();
 
 	$.ajax({
-		url:'../processa/UserSalvar.php',
+		url:'../processa/proc_edit_usuarios.php',
 		type:'POST',
 		data:{nome:nome, email:email, usuario:usuario, obs:obs, niveis_acesso_id:niveis_acesso_id, situacoes_usuario_id:situacoes_usuario_id, modified:modified, id:id},
 		success:function confirmEditar(id) {
@@ -144,7 +144,7 @@ function salvarUser(e){
 			closeOnConfirm: false
 		}, function () {
 			location.reload();
-			$('#ModalPagina').modal('hide');
+			$('#ModalUser').modal('hide');
 		});
 		}
 	});
@@ -162,9 +162,26 @@ function editarFoto(id) {
 		},
 		success:function(html){
 			$('#ModalFoto').find('.modal-body').html(html);
-			$('#ModalFoto').find('.modal-body').find('form').on('submit', salvarFoto);
 
 			$('#ModalFoto').modal('show');
+		}
+	});
+}
+
+function editarFoto2(id) {
+	
+	$.ajax({
+		url: "../editar/edit_foto2.php",
+		type:'POST',
+		data:{id:id},
+		beforeSend:function(){
+			$('#ModalFoto2').find('.modal-body').html('<center><img src="../assets/images/unnamed.gif"></center>');
+			$('#ModalFoto2').modal('show');
+		},
+		success:function(html){
+			$('#ModalFoto2').find('.modal-body').html(html);
+
+			$('#ModalFoto2').modal('show');
 		}
 	});
 }
@@ -188,6 +205,25 @@ function editarSenha(id) {
 	});
 }
 
+function editarSenha2(id) {
+	
+	$.ajax({
+		url: "../editar/edit_senha.php",
+		type:'POST',
+		data:{id:id},
+		beforeSend:function(){
+			$('#ModalSenha2').find('.modal-body').html('<center><img src="../assets/images/unnamed.gif"></center>');
+			$('#ModalSenha2').modal('show');
+		},
+		success:function(html){
+			$('#ModalSenha2').find('.modal-body').html(html);
+			$('#ModalSenha2').find('.modal-body').find('form').on('submit', salvarSenha);
+
+			$('#ModalSenha2').modal('show');
+		}
+	});
+}
+
 function salvarSenha(e){
 	e.preventDefault();
 
@@ -196,7 +232,7 @@ function salvarSenha(e){
 	var id = $(this).find(':input[name=id]').val();
 
 	$.ajax({
-		url:'../processa/SenhaSalvar.php',
+		url:'../processa/proc_edit_senha.php',
 		type:'POST',
 		data:{senha:senha, modified:modified, id:id},
 		success:function confirmEditar(id) {
@@ -208,7 +244,7 @@ function salvarSenha(e){
 			closeOnConfirm: false
 		}, function () {
 			location.reload();
-			$('#ModalPagina').modal('hide');
+			$('#ModalSenha').modal('hide');
 		});
 		}
 	});
@@ -247,10 +283,17 @@ function salvarPerfil(e){
 		url:'../processa/proc_edit_perfil.php',
 		type:'POST',
 		data:{nome:nome, email:email, usuario:usuario, obs:obs, modified:modified, id:id},
-		success:function(){
-			alert("Dados alterados com suceso!");
-			window.location.href = window.location.href;
-			$('#ModalPerfil').modal('hide');
-		}
+		success:function confirmEditar(id) {
+			swal({
+				title: "",
+				text: "Dados Alterados com sucesso",
+				type: "success",
+				confirmButtonClass: 'btn-success',
+				closeOnConfirm: false
+			}, function () {
+				location.reload();
+				$('#ModalPerfil').modal('hide');
+			});
+			}
 	});
 }

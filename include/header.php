@@ -71,24 +71,44 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="<?php echo pg; ?>" class="nav-link">Home</a>
+        <a href="<?php echo pg; ?>/visualizar/home" class="nav-link">Home</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
           <a class="nav-link" data-toggle="dropdown" href="<?php echo pg; ?>/visualizar/perfil">
             <i class="far fa-user"></i> Meu Perfil
           </a>
+          <?php
+          $result_usuario = "SELECT id, nome, foto, niveis_acesso_id FROM usuarios WHERE id='".$_SESSION['id']."' LIMIT 1";
+          $resultado_usuario = mysqli_query($conn, $result_usuario);
+          $row_usuario = mysqli_fetch_assoc($resultado_usuario);   
+          //Somente pegar o primeiro nome
+          $nome = explode(" ", $row_usuario['nome']);
+          $primeiro_nome = $nome[0];
+          ?>
           <div class="dropdown-menu dropdown-menu-lg dropdown-menu ml-4">
-          <span class="dropdown-item dropdown-header">Claudemir Lopes</span>
-          <div class="dropdown-divider"></div>
-            <a href="javascript:;" onclick="editarPerfil('<?php echo $_SESSION['id']; ?>')" title="Editar perfil" class="dropdown-item">
-            <i class="fas fa-edit mr-2"></i> Editar Perfil
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-power-off mr-2"></i> Logout
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item dropdown-footer">Administrador</a>
+            <span class="dropdown-item dropdown-header"><?php echo $row_usuario['nome']; ?></span>
+            <div class="dropdown-divider"></div>
+              <a href="javascript:;" onclick="editarPerfil('<?php echo $_SESSION['id']; ?>')" title="Editar perfil" class="dropdown-item">
+              <i class="fas fa-edit mr-2"></i> Editar Perfil
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="<?php echo pg; ?>/sair.php" class="dropdown-item">
+              <i class="fas fa-power-off mr-2"></i> Logout
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="#" class="dropdown-item dropdown-footer">
+              <?php
+                  if ($row_usuario['niveis_acesso_id'] == 1) {
+                    echo '<b>Nível:</b> Programador';
+                  } elseif ($row_usuario['niveis_acesso_id'] == 2) {
+                    echo '<b>Nível:</b> Administrador';
+                  } elseif ($row_usuario['niveis_acesso_id'] == 3) {
+                    echo '<b>Nível: Colaborador';
+                  } else {
+                    echo '<b>Nível:</b> Estagiário';
+                  }
+                ?>
+            </a>
         </div>
       </li>
     </ul>

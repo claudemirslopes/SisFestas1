@@ -10,7 +10,7 @@
       <img src="<?php echo pg; ?>/assets/dist/img/salaoFestas.png" alt="Logo" class="brand-image elevation-3" style="width: 70%;">
     </a> -->
 
-    <a href="<?php echo pg; ?>" class="brand-link">
+    <a href="<?php echo pg; ?>/visualizar/home" class="brand-link">
     <?php
     $result_logos = "SELECT * FROM logos
       ORDER BY id ASC
@@ -38,12 +38,37 @@
     <!-- Sidebar -->
     <div class="sidebar">
       <!-- Sidebar user panel (optional) -->
+      <?php
+      $result_usuario = "SELECT id, nome, foto, niveis_acesso_id FROM usuarios WHERE id='".$_SESSION['id']."' LIMIT 1";
+      $resultado_usuario = mysqli_query($conn, $result_usuario);
+      $row_usuario = mysqli_fetch_assoc($resultado_usuario);   
+      //Somente pegar o primeiro nome
+      $nome = explode(" ", $row_usuario['nome']);
+      $primeiro_nome = $nome[0];
+      ?>
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="<?php echo pg; ?>/assets/dist/img/2.jpg" class="img-circle elevation-2" alt="User Image">
+          <?php if(!empty($row_usuario['foto'])){ ?>
+            <img src="<?php echo pg.'/assets/images/usuario/'.$_SESSION['id'].'/'.$row_usuario['foto'];?>" class="img-circle elevation-2" alt="User Image">
+          <?php } else { ?>
+            <img src="<?php echo pg.'/assets/images/usuario/no.jpg'; ?>" class="img-circle elevation-2" alt="User Image">
+          <?php } ?>
         </div>
         <div class="info">
-          <a href="#" class="d-block">Claudemir S. Lopes</a>
+          <a href="javascript:;" onclick="editarPerfil('<?php echo $_SESSION['id']; ?>')" title="Editar perfil" class="d-block"><?php echo $primeiro_nome; ?>&nbsp;
+            <span style="font-size:.6em;">
+              <?php
+                if ($row_usuario['niveis_acesso_id'] == 1) {
+                  echo '[Programador]';
+                } elseif ($row_usuario['niveis_acesso_id'] == 2) {
+                  echo '[Administrador]';
+                } elseif ($row_usuario['niveis_acesso_id'] == 3) {
+                  echo '[Colaborador]';
+                } else {
+                  echo '[Estagiário]';
+                }
+              ?>
+            </span></a>
         </div>
       </div>
 
@@ -51,7 +76,7 @@
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <li class="nav-item">
-            <a href="<?php echo pg; ?>" class="nav-link active">
+            <a href="<?php echo pg; ?>/visualizar/home" class="nav-link active">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard

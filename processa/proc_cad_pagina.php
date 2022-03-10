@@ -12,7 +12,7 @@ if ($SendCadPagina) {
     $dados_validos = vazio($dados);
     if (!$dados_validos) {
         $erro = true;
-        $_SESSION['msg'] = "<div class='alert alert-danger'><i class='fa fa-exclamation-circle' aria-hidden='true'></i>&nbsp;&nbsp; Necessário preencher todos os campos para cadastrar a página!</div>";
+        $_SESSION['msg'] = "<div class='alert alert-warning'><i class='fa fa-exclamation-circle' aria-hidden='true'></i>&nbsp;&nbsp; Necessário preencher todos os campos para cadastrar a página!</div>";
     }
     
     else {

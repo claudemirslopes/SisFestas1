@@ -187,4 +187,5 @@ if (!isset($seguranca)) {
         <div class="modal-body"></div>
     </div>
     </div>
-</div><!-- /.fim do modal editar -->
+</div>
+<!-- /.fim do modal editar -->

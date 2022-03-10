@@ -66,7 +66,7 @@ if (!empty($id)) {
                 $row_nivel_acesso = mysqli_fetch_assoc($resultado_nivel_acesso);
                 ?>
                     <div class="card-header">
-                        <strong class="card-title mb-3">Permissão: </strong>&nbsp;&nbsp; <?php echo $row_nivel_acesso['nome_nivel_acesso']; ?>
+                        <strong class="card-title">Permissão: </strong>&nbsp;&nbsp; <?php echo $row_nivel_acesso['nome_nivel_acesso']; ?>
                         <div class="float-right">
                             <!-- Carregar o botão de cadatrar -->
                             <a href="<?php echo pg . '/listar/list_niv_acessos' ?>"><button type="button" class="btn btn-sm btn-outline-dark"><i class="fa fa-list" aria-hidden="true"></i>&nbsp;&nbsp; Listar Nível de Acesso</button></a>

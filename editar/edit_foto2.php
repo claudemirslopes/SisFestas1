@@ -11,15 +11,16 @@ $date = date('d-m-Y H:i');
 
 ?>
 					 
-	<form action="../processa/proc_edit_foto" method="POST" class="form-horizontal" enctype="multipart/form-data"> 
+	<form action="../processa/proc_edit_foto2" method="POST" class="form-horizontal" enctype="multipart/form-data"> 
 
 		<div class="form-group col-md-12">
+			<input type="hidden" name="id" value="<?php echo $info['id']; ?>">
 			<input type="hidden" name="foto_antiga" value="<?php echo $info['foto']; ?>">
 			<input type="file" class="form-control form-control-sm form-control-file" id="exampleFormControlFile1" name="foto">
 		</div>
 
 		<div class="card-text text-sm-center">
-			<input type="submit" class="btn btn-outline-primary" name="SendEditFoto" value="Atualizar foto">
+			<input type="submit" class="btn btn-outline-primary" name="SendEditFoto2" value="Atualizar foto">
 		</div>
 			
 	</form>
