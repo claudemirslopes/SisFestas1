@@ -102,19 +102,19 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="clientes.html" class="nav-link">
+                <a href="<?php echo pg; ?>/listar/list_clientes" class="nav-link">
                   <i class="fa fa-user-plus nav-icon text-primary"></i>
                   <p>Clientes</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
+                <a href="<?php echo pg; ?>/listar/list_pacotes" class="nav-link">
                   <i class="fa fa-archive nav-icon text-light"></i>
                   <p>Pacotes</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
+                <a href="<?php echo pg; ?>/listar/list_servicos" class="nav-link">
                   <i class="fa fa-tags nav-icon text-warning"></i>
                   <p>Serviços</p>
                 </a>
