@@ -32,8 +32,13 @@ if($sql->rowCount() > 0 ){
         <div class="text-center">
            <a href="javascript:;" onclick="editarFoto2('<?php echo $info['id']; ?>')">
             <figure id="container">
+              <?php if (isset($info['foto'])) { ?>
               <img class="rounded-circle" src="../assets/images/usuario/<?php echo $info['id']; ?>/<?php echo $info['foto']; ?>" alt="Generic placeholder image" width="140" height="140"></a>
               <figcaption>trocar foto</figcaption>
+              <?php } else { ?>
+                <img class="rounded-circle" src="../assets/images/usuario/no.jpg" alt="Generic placeholder image" width="140" height="140"></a>
+              <figcaption>inserir foto</figcaption>
+              <?php } ?>
             </figure>
         </div>
         <h5 class="text-center" style="padding-top: 15px;"><?php echo $info['nome']; ?></h5>

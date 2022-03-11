@@ -29,7 +29,7 @@ if (!empty($id)) {
             apagarFoto($destino_apagar);
             
             $_SESSION['msg'] = "<div class='alert alert-success'>
-            <i class='fa fa-check-circle text-light' aria-hidden='true'></i>&nbsp;&nbsp;
+            <i class='fa fa-check-circle text-secondary' aria-hidden='true'></i>&nbsp;&nbsp;
             Usuário apagado com sucesso!
             <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
                 <span aria-hidden='true'>&times;</span>
@@ -39,7 +39,7 @@ if (!empty($id)) {
             header("Location: $url_destino");
         } else {
             $_SESSION['msg'] = "<div class='alert alert-danger'>
-            <i class='fa fa-exclamation-triangle text-light' aria-hidden='true'></i>&nbsp;&nbsp;
+            <i class='fa fa-exclamation-triangle text-secondary' aria-hidden='true'></i>&nbsp;&nbsp;
             Usuário não foi apagado!
             <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
                 <span aria-hidden='true'>&times;</span>
@@ -50,7 +50,7 @@ if (!empty($id)) {
         }
     } else {
         $_SESSION['msg'] = "<div class='alert alert-danger'>
-        <i class='fa fa-exclamation-triangle text-light' aria-hidden='true'></i>&nbsp;&nbsp;
+        <i class='fa fa-exclamation-triangle text-secondary' aria-hidden='true'></i>&nbsp;&nbsp;
         Usuário não foi encontrado!
         <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
             <span aria-hidden='true'>&times;</span>
@@ -61,7 +61,7 @@ if (!empty($id)) {
     }
 } else {
     $_SESSION['msg'] = "<div class='alert alert-danger'>
-    <i class='fa fa-exclamation-triangle text-light' aria-hidden='true'></i>&nbsp;&nbsp;
+    <i class='fa fa-exclamation-triangle text-secondary' aria-hidden='true'></i>&nbsp;&nbsp;
     Usuário não foi encontrado!
     <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
         <span aria-hidden='true'>&times;</span>

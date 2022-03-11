@@ -48,10 +48,8 @@ if (!isset($seguranca)) {
                         <div class="row" style="display: inline !important;">
                             <?php
                             if (isset($_SESSION['msg'])) {
-                                echo '<div class="col-md-12" style="margin-top:-25px !important;">';
                                 echo $_SESSION['msg'];
                                 unset($_SESSION['msg']);
-                                echo '</div>';
                             }
 
                             /* Verificar o botão */

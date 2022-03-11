@@ -15,7 +15,7 @@ if($SendEditFoto){
     $dados_validos = vazio($dados);
     if (!$dados_validos) {
         $erro = true;
-        $_SESSION['msg'] = "<div class='alert alert-warning mt-4'><i class='fa fa-exclamation-circle' aria-hidden='true'></i>&nbsp;&nbsp; Necessário preencher todos os campos para editar a foto!</div>";
+        $_SESSION['msg'] = "<div class='alert alert-warning'><i class='fa fa-exclamation-circle' aria-hidden='true'></i>&nbsp;&nbsp; Necessário preencher todos os campos para editar a foto!</div>";
     }
     
     //validar extensão da imagem
@@ -23,7 +23,7 @@ if($SendEditFoto){
         $foto = $_FILES['foto'];
         if(!validarExtesao($foto['type'])){
             $erro = true;
-            $_SESSION['msg'] = "<div class='alert alert-warning mt-4'><i class='fa fa-exclamation-circle' aria-hidden='true'></i>&nbsp;&nbsp; Extensão de foto inválida!</div>";
+            $_SESSION['msg'] = "<div class='alert alert-warning'><i class='fa fa-exclamation-circle' aria-hidden='true'></i>&nbsp;&nbsp; Extensão de foto inválida!</div>";
         }else{
             $foto['name'] = caracterEspecial($foto['name']);
             $campo_foto = "foto=";
@@ -59,17 +59,17 @@ if($SendEditFoto){
                 upload($foto, $destino, 200, 200);
             }
             
-            $_SESSION['msg'] = "<div class='alert alert-success mt-4'><i class='fa fa-check-circle' aria-hidden='true'></i>&nbsp;&nbsp; Foto alterada com sucesso!</div>";
+            $_SESSION['msg'] = "<div class='alert alert-success'><i class='fa fa-check-circle' aria-hidden='true'></i>&nbsp;&nbsp; Foto alterada com sucesso!</div>";
             $url_destino = pg . "/visualizar/home";
             header("Location: $url_destino");
         }else{
-            $_SESSION['msg'] = "<div class='alert alert-danger mt-4'><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;&nbsp; Erro ao editar foto!</div>";
+            $_SESSION['msg'] = "<div class='alert alert-danger'><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;&nbsp; Erro ao editar foto!</div>";
             $url_destino = pg . "/visualizar/home";
             header("Location: $url_destino");
         }
     }
 }else {
-    $_SESSION['msg'] = "<div class='alert alert-danger mt-4'><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;&nbsp; Erro ao carregar página!</div>";
+    $_SESSION['msg'] = "<div class='alert alert-danger'><i class='fa fa-exclamation-triangle' aria-hidden='true'></i>&nbsp;&nbsp; Erro ao carregar página!</div>";
     $url_destino = pg . "/visualizar/home";
     header("Location: $url_destino");
 }
