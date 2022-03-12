@@ -68,7 +68,11 @@
 <!-- AdminLTE App -->
 <script src="<?php echo pg; ?>/assets/dist/js/adminlte.js"></script>
 <!-- AdminLTE for demo purposes -->
-<script src='<?php echo pg; ?>/assets/dist/js/script.js'></script>
+<script src='<?php echo pg; ?>/assets/js/script.js'></script>
+ <!-- Main JS -->
+  <script src="<?php echo pg; ?>/assets/js/app.js"></script>
+  <script src="<?php echo pg; ?>/assets/js/empresas.js"></script>
+  <script src="<?php echo pg; ?>/assets/js/jquery.mask.min.js"></script>
 <script src="<?php echo pg; ?>/assets/dist/js/demo.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="<?php echo pg; ?>/assets/dist/js/pages/dashboard.js"></script>

@@ -54,7 +54,7 @@ if (!empty($id)) {
     <!-- Box pequeno (caixa estática) -->
         <div class="row">
             <div class="col-md-12">
-                <div class="card">
+                <div class="card card-warning card-outline">
                 <?php
                 $result_nivel_acesso = "SELECT nivpg.*,
                     nivac.nome_nivel_acesso

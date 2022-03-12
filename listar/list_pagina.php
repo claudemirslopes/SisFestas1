@@ -29,7 +29,7 @@ if (!isset($seguranca)) {
     <!-- Box pequeno (caixa estática) -->
         <div class="row">
             <div class="col-md-12">
-                <div class="card">
+                <div class="card card-info card-outline">
                     <div class="card-header">
                         <strong class="card-title">Páginas do Sistema:</strong>
                         <div class="float-right">
