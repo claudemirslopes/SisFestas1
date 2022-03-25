@@ -429,6 +429,7 @@ $(document).ready(function() {
                             </div>
                         </div>
                     </fieldset>
+                <!-- <input type="hidden" nome="situacao" value="1"> -->
             </div>
         </div>
         <div class="modal-footer">

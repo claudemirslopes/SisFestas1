@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 25-Mar-2022 às 18:34
+-- Tempo de geração: 25-Mar-2022 às 21:44
 -- Versão do servidor: 10.4.22-MariaDB
 -- versão do PHP: 7.4.27
 
@@ -46,8 +46,8 @@ CREATE TABLE `clientes` (
   `recuperar_senha` varchar(220) DEFAULT NULL,
   `chave_descadastro` varchar(220) DEFAULT NULL,
   `foto` varchar(50) DEFAULT NULL,
-  `niveis_acesso_id` int(11) DEFAULT NULL,
-  `situacoes_usuario_id` int(11) DEFAULT NULL,
+  `obs` tinytext DEFAULT NULL,
+  `situacao` int(11) DEFAULT 1,
   `created` datetime NOT NULL DEFAULT current_timestamp(),
   `modified` datetime DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
@@ -56,9 +56,12 @@ CREATE TABLE `clientes` (
 -- Extraindo dados da tabela `clientes`
 --
 
-INSERT INTO `clientes` (`id`, `nome`, `email`, `usuario`, `senha`, `cpf`, `rg`, `telefone`, `cep`, `rua`, `numero`, `complemento`, `bairro`, `cidade`, `uf`, `recuperar_senha`, `chave_descadastro`, `foto`, `niveis_acesso_id`, `situacoes_usuario_id`, `created`, `modified`) VALUES
-(1, 'Claudemir da Silva Lopes', 'claudemir.slopes@hotmail.com', 'claudemir', '$2y$10$CaPIIT.zHJiGK3yUO7MbleuvUOZRU16xxshtAHNiQT8mjdAHrL6D.', '284.132.918-60', '275324102', '(19) 98457-8361', '13483-332', 'Rua Guido José Bellon', '358', '', 'Parque Residencial Abílio Pedro', 'Limeira', 'SP', NULL, NULL, 'fotosite.jpg', 1, 1, '2022-02-23 11:15:44', '2022-03-12 08:25:56'),
-(2, 'Eliane Rocha de Freitas Lopes', 'lifreitaslopes@gmail.com', 'lifreitas', '$2y$10$fFVUC7KVoHtDnTrcxjZFGe5y6oyIIDGQ6JDDzByXkznYK4PN6jMSC', '964.301.686-20', '547899541', '(19) 98457-8361', '13482-050', 'Rua Francisco Orlando Stocco', '258', 'fundos', 'Jardim Ouro Verde', 'Limeira', 'SP', NULL, NULL, '1622327057853.png', 2, 1, '2022-02-23 11:19:13', '2022-03-12 08:39:32');
+INSERT INTO `clientes` (`id`, `nome`, `email`, `usuario`, `senha`, `cpf`, `rg`, `telefone`, `cep`, `rua`, `numero`, `complemento`, `bairro`, `cidade`, `uf`, `recuperar_senha`, `chave_descadastro`, `foto`, `obs`, `situacao`, `created`, `modified`) VALUES
+(1, 'Claudemir da Silva Lopes', 'claudemir.slopes@hotmail.com', 'claudemir', '$2y$10$CaPIIT.zHJiGK3yUO7MbleuvUOZRU16xxshtAHNiQT8mjdAHrL6D.', '284.132.918-60', '275324102', '(19) 98457-8361', '13483-332', 'Rua Guido José Bellon', '358', '', 'Parque Residencial Abílio Pedro', 'Limeira', 'SP', NULL, NULL, 'fotosite.jpg', NULL, 1, '2022-02-23 11:15:44', '2022-03-12 08:25:56'),
+(2, 'Eliane Rocha de Freitas Lopes', 'lifreitaslopes@gmail.com', 'lifreitas', '$2y$10$fFVUC7KVoHtDnTrcxjZFGe5y6oyIIDGQ6JDDzByXkznYK4PN6jMSC', '964.301.686-20', '547899541', '(19) 98457-8361', '13482-050', 'Rua Francisco Orlando Stocco', '258', 'fundos', 'Jardim Ouro Verde', 'Limeira', 'SP', NULL, NULL, '1622327057853.png', NULL, 1, '2022-02-23 11:19:13', '2022-03-12 08:39:32'),
+(3, 'Luke Skywalker Lopes', 'luke@luke.com', 'lukesky', '$2y$10$a93XTvtsKJROKaTLm4Q3.uPcQ.1GULrhWx6SuxoXolVgBgf/J86pm', '284.132.918-60', '25874587', '(19) 98457-8361', '13483-332', 'Rua Guido José Bellon', '358', '', 'Parque Residencial Abílio Pedro', 'Limeira', 'SP', NULL, NULL, NULL, 'Usuário apenas para testes no sistema de cadastro', 0, '2022-03-25 17:05:00', NULL),
+(4, 'Rogério Moura', 'rogerio.moura@hotmail.com', 'rogerio.moura', '$2y$10$cmzVaqR1oD0kLnUYyPVwzOrE4loASel3nv2/cpF21BvTWG1BR45Na', '425.073.670-91', '4587789965', '(13) 98457-8361', '13487-185', 'Rua Rúbens Quadros', '255', '', 'Jardim Anhangüera', 'Limeira', 'SP', NULL, NULL, 'img-20210423-wa0011.jpg', '', 1, '2022-03-25 17:10:07', NULL),
+(5, 'Lilian Doida Moura', 'lilianadoida@hotquente.com', 'lilianadoida', '$2y$10$e28NQAgTK6wC3CSnDGWZEuI2iU50v66XbdSvosvBpk526EzL1wr2G', '844.174.350-90', '278545877', '(15) 45897-8999', '13483-333', 'Rua Edeméia Brandão de Oliveira', '258', '', 'Parque Residencial Abílio Pedro', 'Limeira', 'SP', NULL, NULL, NULL, '', 1, '2022-03-25 17:33:31', NULL);
 
 -- --------------------------------------------------------
 
@@ -103,28 +106,6 @@ INSERT INTO `niveis_acessos` (`id`, `nome_nivel_acesso`, `ordem`, `created`, `mo
 (2, 'Administrador', 2, '2022-02-01 16:58:27', '2022-02-28 17:06:03'),
 (3, 'Colaborador', 3, '2022-02-01 16:58:36', '2022-02-28 17:06:10'),
 (4, 'Estagiário', 4, '2022-02-19 12:22:50', '2022-03-09 09:40:32');
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `niveis_acessos_cli`
---
-
-CREATE TABLE `niveis_acessos_cli` (
-  `id` int(11) NOT NULL,
-  `nome_nivel_acesso` varchar(50) NOT NULL,
-  `ordem` int(11) NOT NULL,
-  `created` datetime NOT NULL DEFAULT current_timestamp(),
-  `modified` datetime DEFAULT NULL ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
-
---
--- Extraindo dados da tabela `niveis_acessos_cli`
---
-
-INSERT INTO `niveis_acessos_cli` (`id`, `nome_nivel_acesso`, `ordem`, `created`, `modified`) VALUES
-(1, 'Cliente', 1, '2022-03-12 08:19:19', NULL),
-(2, 'Visitante', 2, '2022-03-12 08:19:31', NULL);
 
 -- --------------------------------------------------------
 
@@ -282,23 +263,11 @@ INSERT INTO `niveis_acessos_paginas` (`id`, `niveis_acesso_id`, `pagina_id`, `pe
 (135, 1, 34, 1, 34, '2022-03-11 17:26:21', NULL),
 (136, 2, 34, 2, 34, '2022-03-11 17:26:22', NULL),
 (137, 3, 34, 2, 34, '2022-03-11 17:26:22', NULL),
-(138, 4, 34, 2, 34, '2022-03-11 17:26:22', NULL);
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `niveis_acessos_paginas_c`
---
-
-CREATE TABLE `niveis_acessos_paginas_c` (
-  `id` int(11) NOT NULL,
-  `niveis_acesso_id` int(11) NOT NULL,
-  `pagina_id` int(11) NOT NULL,
-  `permissao` int(11) NOT NULL,
-  `ordem` int(11) NOT NULL,
-  `created` datetime NOT NULL DEFAULT current_timestamp(),
-  `modified` datetime DEFAULT NULL ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+(138, 4, 34, 2, 34, '2022-03-11 17:26:22', NULL),
+(141, 1, 35, 1, 35, '2022-03-25 14:38:58', NULL),
+(142, 2, 35, 2, 35, '2022-03-25 14:38:58', NULL),
+(143, 3, 35, 2, 35, '2022-03-25 14:38:58', NULL),
+(144, 4, 35, 2, 35, '2022-03-25 14:38:58', NULL);
 
 -- --------------------------------------------------------
 
@@ -353,22 +322,8 @@ INSERT INTO `paginas` (`id`, `endereco`, `nome_pagina`, `obs`, `created`, `modif
 (31, 'processa/proc_edit_foto2', 'Proceso de Edição de Foto Usuário', 'Processa a edição de foto do usuário', '2022-03-10 15:39:01', NULL),
 (32, 'listar/list_clientes', 'Listar Clientes', 'Listar clientes do sistema', '2022-03-11 16:31:46', NULL),
 (33, 'editar/edit_clientes', 'Editar Clientes', 'Editar clientes no sistema', '2022-03-11 17:25:45', NULL),
-(34, 'processa/proc_apagar_clientes', 'Processo de Apagar Cliente', 'Processa a exclusão de cliente', '2022-03-11 17:26:21', NULL);
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `paginas_c`
---
-
-CREATE TABLE `paginas_c` (
-  `id` int(11) NOT NULL,
-  `endereco` varchar(120) NOT NULL,
-  `nome_pagina` varchar(120) NOT NULL,
-  `obs` text DEFAULT NULL,
-  `created` datetime NOT NULL DEFAULT current_timestamp(),
-  `modified` datetime DEFAULT NULL ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+(34, 'processa/proc_apagar_clientes', 'Processo de Apagar Cliente', 'Processa a exclusão de cliente', '2022-03-11 17:26:21', NULL),
+(35, 'processa/proc_cad_clientes', 'Processo de Cadastrar Clientes', 'Processo de cadastro de clientes no sistema', '2022-03-25 14:38:58', '2022-03-25 16:03:21');
 
 -- --------------------------------------------------------
 
@@ -421,7 +376,7 @@ CREATE TABLE `usuarios` (
 INSERT INTO `usuarios` (`id`, `nome`, `email`, `usuario`, `senha`, `obs`, `recuperar_senha`, `chave_descadastro`, `foto`, `niveis_acesso_id`, `situacoes_usuario_id`, `created`, `modified`) VALUES
 (1, 'Claudemir da Silva Lopes', 'claudemir.slopes@hotmail.com', 'claudemir', '$2y$10$eiGctERNISJWxpIM7BGtpucbxBgIoC0w4O6K.SGqF0AviYPwcBE9y', 'Claudemir é o desenvolvedor do site e é responsável por toda manutenção e atualização do mesmo.', '2dbd4b6f451138bd20a7228e63e7bba9', NULL, '1622326928532.png', 1, 1, '2017-07-23 00:00:00', '2022-03-11 08:08:37'),
 (2, 'Eliane Rocha de Freitas Lopes', 'lifreitaslopes@gmail.com', 'eliane', '$2y$10$7z2Jgv.VCJ1dBo8dvpTbe.iUPsMQyrO9gX.rMQ6TGA6rFENx3/z3e', NULL, NULL, NULL, '1622327057853.png', 2, 1, '2022-03-01 11:18:38', '2022-03-01 11:35:50'),
-(3, 'Luke Skywalker Lopes', 'luke@sky.com', 'lukesky', '$2y$10$r.aoiHEO3uWRyJa8zZYrpOpixF6CBtG.T3R7jEEsQnF6H/EEkksO6', 'Este usuário é o meu mascote de estimação, ele não tem raça definida, mas é o amor da minha vida e o símbolo da minha empresa.', NULL, NULL, 'img-20210423-wa0011.jpg', 3, 1, '2022-03-10 10:21:48', '2022-03-10 16:32:10');
+(3, 'Luke Skywalker Lopes', 'luke@sky.com', 'lukesky', '$2y$10$r.aoiHEO3uWRyJa8zZYrpOpixF6CBtG.T3R7jEEsQnF6H/EEkksO6', 'Este usuário é o meu mascote de estimação, ele não tem raça definida, mas é o amor da minha vida e o símbolo da minha empresa.', NULL, NULL, 'img-20210423-wa0011.jpg', 3, 1, '2022-03-10 10:21:48', '2022-03-25 16:04:00');
 
 --
 -- Índices para tabelas despejadas
@@ -431,9 +386,7 @@ INSERT INTO `usuarios` (`id`, `nome`, `email`, `usuario`, `senha`, `obs`, `recup
 -- Índices para tabela `clientes`
 --
 ALTER TABLE `clientes`
-  ADD PRIMARY KEY (`id`) USING BTREE,
-  ADD KEY `FK2_situser` (`situacoes_usuario_id`) USING BTREE,
-  ADD KEY `FK2_nacs` (`niveis_acesso_id`) USING BTREE;
+  ADD PRIMARY KEY (`id`) USING BTREE;
 
 --
 -- Índices para tabela `logos`
@@ -448,12 +401,6 @@ ALTER TABLE `niveis_acessos`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices para tabela `niveis_acessos_cli`
---
-ALTER TABLE `niveis_acessos_cli`
-  ADD PRIMARY KEY (`id`) USING BTREE;
-
---
 -- Índices para tabela `niveis_acessos_paginas`
 --
 ALTER TABLE `niveis_acessos_paginas`
@@ -462,24 +409,10 @@ ALTER TABLE `niveis_acessos_paginas`
   ADD KEY `FK2_apagina` (`pagina_id`);
 
 --
--- Índices para tabela `niveis_acessos_paginas_c`
---
-ALTER TABLE `niveis_acessos_paginas_c`
-  ADD PRIMARY KEY (`id`) USING BTREE,
-  ADD KEY `FK1_nacesso` (`niveis_acesso_id`) USING BTREE,
-  ADD KEY `FK2_apagina` (`pagina_id`) USING BTREE;
-
---
 -- Índices para tabela `paginas`
 --
 ALTER TABLE `paginas`
   ADD PRIMARY KEY (`id`);
-
---
--- Índices para tabela `paginas_c`
---
-ALTER TABLE `paginas_c`
-  ADD PRIMARY KEY (`id`) USING BTREE;
 
 --
 -- Índices para tabela `situacoes_usuarios`
@@ -503,7 +436,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de tabela `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de tabela `logos`
@@ -518,34 +451,16 @@ ALTER TABLE `niveis_acessos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT de tabela `niveis_acessos_cli`
---
-ALTER TABLE `niveis_acessos_cli`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
 -- AUTO_INCREMENT de tabela `niveis_acessos_paginas`
 --
 ALTER TABLE `niveis_acessos_paginas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=141;
-
---
--- AUTO_INCREMENT de tabela `niveis_acessos_paginas_c`
---
-ALTER TABLE `niveis_acessos_paginas_c`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=145;
 
 --
 -- AUTO_INCREMENT de tabela `paginas`
 --
 ALTER TABLE `paginas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
-
---
--- AUTO_INCREMENT de tabela `paginas_c`
---
-ALTER TABLE `paginas_c`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT de tabela `situacoes_usuarios`
@@ -564,25 +479,11 @@ ALTER TABLE `usuarios`
 --
 
 --
--- Limitadores para a tabela `clientes`
---
-ALTER TABLE `clientes`
-  ADD CONSTRAINT `FK2_SitU` FOREIGN KEY (`situacoes_usuario_id`) REFERENCES `situacoes_usuarios` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `FK2_nAcS` FOREIGN KEY (`niveis_acesso_id`) REFERENCES `niveis_acessos_cli` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
 -- Limitadores para a tabela `niveis_acessos_paginas`
 --
 ALTER TABLE `niveis_acessos_paginas`
   ADD CONSTRAINT `FK2_apagina` FOREIGN KEY (`pagina_id`) REFERENCES `paginas` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `FK_niveis_acessos_paginas_niveis_acessos` FOREIGN KEY (`niveis_acesso_id`) REFERENCES `niveis_acessos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Limitadores para a tabela `niveis_acessos_paginas_c`
---
-ALTER TABLE `niveis_acessos_paginas_c`
-  ADD CONSTRAINT `FK1_nac` FOREIGN KEY (`niveis_acesso_id`) REFERENCES `niveis_acessos_cli` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `FK2_pag` FOREIGN KEY (`pagina_id`) REFERENCES `niveis_acessos_paginas_c` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Limitadores para a tabela `usuarios`
