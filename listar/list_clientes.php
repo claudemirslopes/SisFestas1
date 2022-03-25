@@ -131,17 +131,11 @@ $(document).ready(function() {
                             $inicio = ($qnt_result_pg * $pagina) - $qnt_result_pg;
 
                             if ($_SESSION['niveis_acesso_id'] == 1) {
-                                $result_cliente = "SELECT user.id, user.nome, user.telefone, user.usuario, user.cpf, user.niveis_acesso_id, user.situacoes_usuario_id,
-                                niv.nome_nivel_acesso
-                                    FROM clientes user
-                                    INNER JOIN niveis_acessos_cli niv on niv.id=user.niveis_acesso_id 
+                                $result_cliente = "SELECT * FROM clientes
                                     ORDER BY id DESC
                                     LIMIT $inicio, $qnt_result_pg";
                             } else {
-                                $result_cliente = "SELECT user.id, user.nome, user.telefone, user.usuario, user.cpf, user.niveis_acesso_id, user.situacoes_cliente_id,
-                                niv.nome_nivel_acesso
-                                    FROM clientes user
-                                    INNER JOIN niveis_acessos_cli niv on niv.id=user.niveis_acesso_id
+                                $result_cliente = "SELECT * FROM clientes
                                     WHERE ordem > '".$_SESSION['ordem']."'
                                     ORDER BY id DESC
                                     LIMIT $inicio, $qnt_result_pg";
@@ -189,7 +183,7 @@ $(document).ready(function() {
                                             <td class="hidden-sm"><?php echo $row_cliente['telefone']; ?></td>
                                             <td class="hidden-sm"><?php echo $row_cliente['usuario']; ?></td>
                                             <td class="hidden-sm"><?php echo $row_cliente['cpf']; ?></td>
-                                            <td class="text-center"><?php echo $row_cliente['situacoes_usuario_id'] == 1 ? '<i class="fa fa-check text-success font-weight-bold" aria-hidden="true" title="Ativo"></i>' : '<i class="fa fa-times text-dark font-weight-bold" aria-hidden="true" title="Inativo"></i>'; ?>
+                                            <td class="text-center"><?php echo $row_cliente['situacao'] == 1 ? '<i class="fa fa-check text-success font-weight-bold" aria-hidden="true" title="Ativo"></i>' : '<i class="fa fa-times text-dark font-weight-bold" aria-hidden="true" title="Inativo"></i>'; ?>
                                             </td>
                                             <td class="text-right">
                                                 <?php
@@ -235,7 +229,7 @@ $(document).ready(function() {
                             <p class="card-text" style="font-size: .9em;"><span class="font-weight-bold">
                                 <?php 
                                 $result_usuarios = "SELECT COUNT(id) AS num_result FROM clientes
-                                WHERE situacoes_usuario_id = 1";
+                                WHERE situacao = 1";
                                 $resultao_usuarios = mysqli_query($conn, $result_usuarios);
                                 $row_usuarios = mysqli_fetch_assoc($resultao_usuarios); ?>
                                 <?php echo $row_usuarios['num_result']; ?> </span>clientes ativos
@@ -251,7 +245,7 @@ $(document).ready(function() {
                                     <b>
                                         <?php 
                                         $result_usuarios = "SELECT COUNT(id) AS num_result FROM clientes
-                                        WHERE situacoes_usuario_id != 1";
+                                        WHERE situacao != 1";
                                         $resultao_usuarios = mysqli_query($conn, $result_usuarios);
                                         $row_usuarios = mysqli_fetch_assoc($resultao_usuarios); ?>
                                         <?php echo $row_usuarios['num_result']; ?>
@@ -435,59 +429,11 @@ $(document).ready(function() {
                             </div>
                         </div>
                     </fieldset>
-                    <fieldset class="border p-3 fset" style="margin-top: 10px;">
-                        <legend class="font-small">&nbsp;&nbsp;<i class="fa fa-lock"></i>&nbsp;&nbsp;Permissões</legend>
-                        <?php
-                        if($_SESSION['niveis_acesso_id'] == 1){
-                        $result_niv_acesso = "SELECT * FROM niveis_acessos_cli"; 
-                        }else{
-                            $result_niv_acesso = "SELECT * FROM niveis_acessos_cli WHERE ordem > '".$_SESSION['ordem']."'";
-                        }
-                        $resultado_niv_acesso = mysqli_query($conn, $result_niv_acesso);
-                        ?>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="inputEmail4">Nível de Acesso</label>
-                                <select class="form-control form-control-sm forp" name="niveis_acesso_id">
-                                    <?php
-                                    while($row_niv_acesso = mysqli_fetch_array($resultado_niv_acesso)){
-                                        if (isset($_SESSION['dados']['niveis_acesso_id']) AND ($_SESSION['dados']['niveis_acesso_id'] == $row_niv_acesso['id'])){
-                                            echo "<option value='".$row_niv_acesso['id']."' selected>".$row_niv_acesso['nome_nivel_acesso']."</option>";
-                                        }else{
-                                            echo "<option value='".$row_niv_acesso['id']."'>".$row_niv_acesso['nome_nivel_acesso']."</option>";
-                                        }
-                                        
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-
-                            <?php
-                            $result_sit_cliente = "SELECT * FROM situacoes_usuarios";
-                            $resultado_sit_cliente = mysqli_query($conn, $result_sit_cliente);
-                            ?>
-                            <div class="form-group col-md-6">
-                                <label for="inputEmail4">Situação</label>
-                                <select class="form-control form-control-sm forp" name="situacoes_usuario_id">
-                                    <?php
-                                    while($row_sit_cliente = mysqli_fetch_array($resultado_sit_cliente)){
-                                        if (isset($_SESSION['dados']['situacoes_usuario_id']) AND ($_SESSION['dados']['niveis_acesso_id'] == $row_sit_cliente['id'])){
-                                            echo "<option value='".$row_sit_cliente['id']."' selected>".$row_sit_cliente['nome_situacao']."</option>";
-                                        }else{
-                                            echo "<option value='".$row_sit_cliente['id']."'>".$row_sit_cliente['nome_situacao']."</option>";
-                                        }
-                                        
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                        </div>
-                    </fieldset>
             </div>
         </div>
         <div class="modal-footer">
             <input type="submit" class="btn btn-outline-primary" name="SendCadcliente" value="Cadastrar cliente">
-        </form>
+            </form>
         </div>
         </div>
     </div>

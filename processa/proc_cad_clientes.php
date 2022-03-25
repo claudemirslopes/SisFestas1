@@ -3,18 +3,17 @@
 if (!isset($seguranca)) {
     exit;
 }
-$SendCadCliente = filter_input(INPUT_POST, 'SendCadCliente', FILTER_SANITIZE_STRING);
-if ($SendCadCliente) {
+
+$SendCadcliente = filter_input(INPUT_POST, 'SendCadcliente', FILTER_SANITIZE_STRING);
+if ($SendCadcliente) {
     $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 
-    $dados['senha'] = str_replace(" ", "", $dados['senha']);
-    $dados['usuario'] = str_replace(" ", "", $dados['usuario']);
     //validar nenhum campo vazio
     $erro = false;
     $dados_validos = $dados;
 
-    //validar CPF em branco
-    if ((strlen($dados_validos['cpf'])) < 11) {
+     //validar CPF em branco
+     if ((strlen($dados_validos['cpf'])) < 11) {
         $erro = true;
         $_SESSION['msg'] = "<div class='sufee-alert alert with-close alert-warning alert-dismissible fade show' style='border-left: 4px solid #FFC107;'>
         <i class='fa fa-exclamation-circle text-warning fa-lg' aria-hidden='true'></i>&nbsp;&nbsp;
@@ -82,7 +81,7 @@ if ($SendCadCliente) {
     </div>";
     }
 
-    //Validar usuario
+    //Validar cliente
     elseif (stristr($dados_validos['usuario'], "'")) {
         $erro = true;
         $_SESSION['msg'] = "<div class='sufee-alert alert with-close alert-warning alert-dismissible fade show' style='border-left: 4px solid #FFC107;'>
@@ -164,11 +163,10 @@ if ($SendCadCliente) {
     </div>";
     }
 
-    
     //validar extensão da imagem
-    elseif(!empty ($_FILES['foto']['name'])){
+    elseif (!empty($_FILES['foto']['name'])) {
         $foto = $_FILES['foto'];
-        if(!validarExtesao($foto['type'])){
+        if (!validarExtesao($foto['type'])) {
             $erro = true;
             $_SESSION['msg'] = "<div class='sufee-alert alert with-close alert-warning alert-dismissible fade show' style='border-left: 4px solid #FFC107;'>
             <i class='fa fa-exclamation-circle text-warning fa-lg' aria-hidden='true'></i>&nbsp;&nbsp;
@@ -177,54 +175,51 @@ if ($SendCadCliente) {
                 <span aria-hidden='true'>&times;</span>
             </button>
         </div>";
-        }else{
+        } else {
             $foto['name'] = caracterEspecial($foto['name']);
             $campo_foto = "foto,";
-            $valor_foto = "'".$foto['name']."',";
+            $valor_foto = "'" . $foto['name'] . "',";
         }
-        
     }
-    
-    else {
-        //Proibir cadastro de CPF duplicado
-        $result_usuario = "SELECT id FROM clientes WHERE cpf='" . $dados_validos['cpf'] . "' LIMIT 1";
-        $resultado_usuario = mysqli_query($conn, $result_usuario);
-        if (($resultado_usuario) AND ( $resultado_usuario->num_rows != 0)) {
-            $erro = true;
-            $_SESSION['msg'] = "<div class='sufee-alert alert with-close alert-warning alert-dismissible fade show' style='border-left: 4px solid #FFC107;'>
-            <i class='fa fa-exclamation-circle text-warning fa-lg' aria-hidden='true'></i>&nbsp;&nbsp;
-            Este CPF já está cadastrado, tente novamente!
-            <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-                <span aria-hidden='true'>&times;</span>
-            </button>
-        </div>";
-        }
-        //Proibir cadastro de usuário duplicado
-        $result_usuario = "SELECT id FROM clientes WHERE usuario='" . $dados_validos['usuario'] . "' LIMIT 1";
-        $resultado_usuario = mysqli_query($conn, $result_usuario);
-        if (($resultado_usuario) AND ( $resultado_usuario->num_rows != 0)) {
-            $erro = true;
-            $_SESSION['msg'] = "<div class='sufee-alert alert with-close alert-warning alert-dismissible fade show' style='border-left: 4px solid #FFC107;'>
-            <i class='fa fa-exclamation-circle text-warning fa-lg' aria-hidden='true'></i>&nbsp;&nbsp;
-            Este usuário já está cadastrado!
-            <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-                <span aria-hidden='true'>&times;</span>
-            </button>
-        </div>";
-        }
-        //Proibir cadastro de email duplicado
-        $result_usuario_email = "SELECT id FROM clientes WHERE email='" . $dados_validos['email'] . "' LIMIT 1";
-        $resultado_usuario_email = mysqli_query($conn, $result_usuario_email);
-        if (($resultado_usuario_email) AND ( $resultado_usuario_email->num_rows != 0)) {
-            $erro = true;
-            $_SESSION['msg'] = "<div class='sufee-alert alert with-close alert-warning alert-dismissible fade show' style='border-left: 4px solid #FFC107;'>
-            <i class='fa fa-exclamation-circle text-warning fa-lg' aria-hidden='true'></i>&nbsp;&nbsp;
-            Este e-mail já está cadastrado!
-            <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-                <span aria-hidden='true'>&times;</span>
-            </button>
-        </div>";
-        }
+
+    //Proibir cadastro de CPF duplicado
+    $result_cliente = "SELECT id FROM clientes WHERE cpf='" . $dados_validos['cpf'] . "' LIMIT 1";
+    $resultado_cliente = mysqli_query($conn, $result_cliente);
+    if (($resultado_cliente) AND ( $resultado_cliente->num_rows != 0)) {
+        $erro = true;
+        $_SESSION['msg'] = "<div class='sufee-alert alert with-close alert-warning alert-dismissible fade show' style='border-left: 4px solid #FFC107;'>
+        <i class='fa fa-exclamation-circle text-warning fa-lg' aria-hidden='true'></i>&nbsp;&nbsp;
+        Este CPF já está cadastrado, tente novamente!
+        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+            <span aria-hidden='true'>&times;</span>
+        </button>
+    </div>";
+    }
+    //Proibir cadastro de usuário duplicado
+    $result_cliente = "SELECT id FROM clientes WHERE usuario='" . $dados_validos['usuario'] . "' LIMIT 1";
+    $resultado_cliente = mysqli_query($conn, $result_cliente);
+    if (($resultado_cliente) AND ( $resultado_cliente->num_rows != 0)) {
+        $erro = true;
+        $_SESSION['msg'] = "<div class='sufee-alert alert with-close alert-warning alert-dismissible fade show' style='border-left: 4px solid #FFC107;'>
+        <i class='fa fa-exclamation-circle text-warning fa-lg' aria-hidden='true'></i>&nbsp;&nbsp;
+        Este usuário já está cadastrado!
+        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+            <span aria-hidden='true'>&times;</span>
+        </button>
+    </div>";
+    }
+    //Proibir cadastro de email duplicado
+    $result_cliente_email = "SELECT id FROM clientes WHERE email='" . $dados_validos['email'] . "' LIMIT 1";
+    $resultado_cliente_email = mysqli_query($conn, $result_cliente_email);
+    if (($resultado_cliente_email) AND ( $resultado_cliente_email->num_rows != 0)) {
+        $erro = true;
+        $_SESSION['msg'] = "<div class='sufee-alert alert with-close alert-warning alert-dismissible fade show' style='border-left: 4px solid #FFC107;'>
+        <i class='fa fa-exclamation-circle text-warning fa-lg' aria-hidden='true'></i>&nbsp;&nbsp;
+        Este e-mail já está cadastrado!
+        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+            <span aria-hidden='true'>&times;</span>
+        </button>
+    </div>";
     }
 
     // Aqui faz a condição para verificar se o CPF é inválido
@@ -240,26 +235,22 @@ if ($SendCadCliente) {
             </button>
         </div>";
     }
-    
+
     //Criar as variaveis da foto quando a mesma não está sendo cadastrada
-    if(empty ($_FILES['foto']['name'])){
+    if (empty($_FILES['foto']['name'])) {
         $campo_foto = "";
         $valor_foto = "";
     }
-    
-    //Houve erro em algum campo será redirecionado para o formulário, não há erro no formulário tenta cadastrar no banco
+
     if ($erro) {
         $_SESSION['dados'] = $dados;
-        $url_destino = pg . "/listar/list_clientes";
+        $url_destino = pg . "/listar/list_clientess";
         header("Location: $url_destino");
     } else {
-
-
         //Criptografar a senha
         $dados_validos['senha'] = password_hash($dados_validos['senha'], PASSWORD_DEFAULT);
-        $result_usuario = "INSERT INTO clientes (id_empresa, nome, email, usuario, senha, cpf, rg, telefone, cep, rua, numero, complemento, bairro, cidade, uf, $campo_foto niveis_acesso_id, situacoes_usuario_id, created) 
+        $result_cliente = "INSERT INTO clientes (nome, email, usuario, senha, cpf, rg, telefone, cep, rua, numero, complemento, bairro, cidade, uf, $campo_foto obs, situacao, created) 
                 VALUES(
-                '" . $dados_validos['id_empresa'] . "',
                 '" . $dados_validos['nome'] . "', 
                 '" . $dados_validos['email'] . "', 
                 '" . $dados_validos['usuario'] . "', 
@@ -275,22 +266,22 @@ if ($SendCadCliente) {
                 '" . $dados_validos['cidade'] . "',
                 '" . $dados_validos['uf'] . "',
                     $valor_foto
-                '" . $dados_validos['niveis_acesso_id'] . "',
-                '" . $dados_validos['situacoes_usuario_id'] . "',
+                '" . $dados_validos['obs'] . "',
+                '" . $dados_validos['situacao'] . "',
                  NOW())";
-        $resultado_usuario = mysqli_query($conn, $result_usuario);
+        $resultado_cliente = mysqli_query($conn, $result_cliente);
         if (mysqli_insert_id($conn)) {
             unset($_SESSION['dados']);
-            
+
             //Redimensionar a imagem e fazer upload
             if(!empty($_FILES['foto']['name'])){
                 $destino = "assets/images/cliente/".mysqli_insert_id($conn)."/";
                 upload($foto, $destino, 200, 200);
             }
-            
+
             $_SESSION['msg'] = "<div class='alert au-alert-success alert-dismissible fade show au-alert au-alert--70per mb-4' role='alert' style='width:100%;'>
             <i class='zmdi zmdi-check-circle'></i>
-            <span class='content'>Cliente cadastrado com sucesso.</span>
+            <span class='content'>cliente cadastrado com sucesso.</span>
             <button class='close' type='button' data-dismiss='alert' aria-label='Close'>
                 <span aria-hidden='true'>
                     <i class='zmdi zmdi-close-circle'></i>
@@ -302,19 +293,19 @@ if ($SendCadCliente) {
         } else {
             $_SESSION['msg'] = "<div class='sufee-alert alert with-close alert-danger alert-dismissible fade show' style='border-left: 4px solid #DC3545;'>
             <i class='fa fa-exclamation-triangle text-danger fa-lg' aria-hidden='true'></i>&nbsp;&nbsp;
-            Erro ao cadastrar cliente!
+            Erro ao cadastrar o cliente!
             <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
                 <span aria-hidden='true'>&times;</span>
             </button>
         </div>";
-            $url_destino = pg . "/listar/list_clientes";
+            $url_destino = pg . "/listar/list_clientess";
             header("Location: $url_destino");
         }
     }
 } else {
     $_SESSION['msg'] = "<div class='sufee-alert alert with-close alert-danger alert-dismissible fade show' style='border-left: 4px solid #DC3545;'>
     <i class='fa fa-exclamation-triangle text-danger fa-lg' aria-hidden='true'></i>&nbsp;&nbsp;
-    A página não pode ser carregada!
+    Erro ao carregar página!
     <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
         <span aria-hidden='true'>&times;</span>
     </button>
