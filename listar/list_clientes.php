@@ -187,9 +187,9 @@ $(document).ready(function() {
                                             </td>
                                             <td class="text-right">
                                                 <?php
-                                                if ($botao_editar) { ?>
-                                                    <a href="javascript:;" onclick="editarCli('<?php echo $row_cliente['id']; ?>')"><i class="fa fa-pencil-square-o text-primary font-weight-bold" aria-hidden="true" title="Editar"></i></a> 
-                                                <?php }  ?>  
+                                                if ($botao_editar) {
+                                                    echo "<a href='" . pg . "/editar/edit_clientes?id=" . $row_cliente['id'] . "'><i class='fa fa-pencil-square-o text-primary font-weight-bold' aria-hidden='true' title='Editar'></i></a> ";
+                                                } ?>   
                                                 <?php if ($botao_apagar) { ?>
                                                     <a href="javascript:;" onclick="confirmExcluir(<?php echo $row_cliente['id']?>)"><i class='fa fa-trash text-danger font-weight-bold' aria-hidden='true' title='Excluir'></i></a>   
                                                 <?php } ?>                            
