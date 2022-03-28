@@ -6,18 +6,18 @@ $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 //verificar a existencia do id na URL
 if (!empty($id)) {
     if($_SESSION['niveis_acesso_id'] == 1){
-        $result_usuario = "SELECT * FROM clientes WHERE id='$id'";
+        $result_cliente = "SELECT * FROM clientes WHERE id='$id'";
     }else{
-        $result_usuario = "SELECT * FROM clientes 
+        $result_cliente = "SELECT * FROM clientes 
             WHERE ordem > '".$_SESSION['ordem']."' AND id='$id'
             LIMIT 1";
     }
     
-    $resultado_usuario = mysqli_query($conn, $result_usuario);
+    $resultado_cliente = mysqli_query($conn, $result_cliente);
 
     //Verificar se encontrou o usuário no banco de dados
-    if (($resultado_usuario) AND ( $resultado_usuario->num_rows != 0)) {
-        $row_usuario = mysqli_fetch_assoc($resultado_usuario);
+    if (($resultado_cliente) AND ( $resultado_cliente->num_rows != 0)) {
+        $row_cliente = mysqli_fetch_assoc($resultado_cliente);
 ?>
 <style>
     .text-primary {
@@ -96,7 +96,7 @@ $(document).ready(function() {
     <div class="container-fluid">
     <div class="row mb-2">
         <div class="col-sm-6">
-        <h1 class="m-0">Edição de Cliente</h1>
+        <h1 class="m-0">Cliente: <span style="font-weight: lighter;"><?php echo $row_cliente['nome']; ?></span></h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
@@ -190,68 +190,36 @@ $(document).ready(function() {
               <div class="tab-content mt-4" id="custom-tabs-four-tabContent">
                   <div class="tab-pane fade show active" id="custom-tabs-four-dados" role="tabpanel" aria-labelledby="custom-tabs-four-dados-tab">
                   <div class="card-body">
-                      <form>
                       <div class="form-row">
                           <div class="form-group col-md-4">
                           <button type="button" data-toggle="modal" data-target="#newevent" class="btn btn-primary">Agendar Evento&nbsp;&nbsp;&nbsp;<i class="fa fa-calendar" aria-hidden="true"></i></button>
                           </div>
                       </div>
-                      <div class="form-row">
-                          <div class="form-group col-md-8">
-                          <label for="inputAddress">Nome</label>
-                          <input type="text" class="form-control" value="Eliane Rocha de Freitas Lopes" readonly="">
+                        <div class="row">
+                          <div class="col-lg-3">
+                            <?php if (!empty($row_cliente['foto'])) { ?>
+                              <img src="../assets/images/cliente/<?php echo $row_cliente['id']; ?>/<?php echo $row_cliente['foto']; ?>" alt="Foto" class="img-thumbnail mt-2">
+                            <?php } else { ?>
+                              <img src="../assets/images/usuario/no.jpg" alt="Foto" class="img-thumbnail mt-2">
+                            <?php } ?>
                           </div>
-                          <div class="form-group col-md-4">
-                          <label for="inputAddress">Email</label>
-                          <div class="input-group">
-                              <div class="input-group-prepend">
-                                  <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                              </div>
-                              <input type="text" class="form-control" value="lifreitaslopes@gmail.com" readonly="">
+                          <div class="col-lg-9">
+                            <div class="card-body">
+                              <dl class="row mt-4" style="text-transform: uppercase;">
+                                <dt class="col-sm-4">Nome Completo:</dt>
+                                <dd class="col-sm-8"><?php echo $row_cliente['nome']; ?></dd>
+                                <dt class="col-sm-4">E-mail:</dt>
+                                <dd class="col-sm-8"><?php echo $row_cliente['email']; ?></dd>
+                                <dt class="col-sm-4">Login:</dt>
+                                <dd class="col-sm-8"><?php echo $row_cliente['usuario']; ?>
+                                <dt class="col-sm-4">Cadastrado em:</dt>
+                                <dd class="col-sm-8"><?php echo date('d/m/Y H:i:s', strtotime($row_cliente['created'])); ?></dd>
+                                </dd>
+                              </dl>
+                            </div>
                           </div>
-                          </div>
-                      </div>
-                      <div class="form-row">
-                          <div class="form-group col-md-6">
-                          <label for="inputAddress">Login</label>
-                          <div class="input-group">
-                              <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fas fa-user"></i></span>
-                              </div>
-                              <input type="text" class="form-control" value="lifreitaslopes" readonly="">
-                          </div>
-                          </div>
-                          <div class="form-group col-md-6">
-                          <label for="inputAddress">Senha</label>
-                          <div class="input-group">
-                              <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                              </div>
-                              <input type="text" class="form-control" value="lulamolusco" readonly="">
-                          </div>
-                          </div>
-                      </div>
-                      <div class="form-row">
-                          <div class="form-group col-md-4">
-                          <label for="inputState">Data de Nascimento</label>
-                          <div class="input-group">
-                              <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-                              </div>
-                              <input type="text" class="form-control" value="28/11/1971" readonly="">
-                          </div>
-                          </div>
-                          <div class="form-group col-md-4">
-                          <label for="inputState">CPF</label>
-                          <input type="text" class="form-control" value="999.999.999-99" readonly="">
-                          </div>
-                          <div class="form-group col-md-4">
-                          <label for="inputZip">RG</label>
-                          <input type="text" class="form-control" value="58.855.585.5" readonly="">
-                          </div>
-                      </div>
-                      <button type="button" data-toggle="modal" data-target="#editcliente" class="btn btn-warning float-right"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Editar informações do cliente</button>
-                      </form>
+                        </div>
+                        <button type="button" data-toggle="modal" data-target="#editcliente" class="btn btn-warning float-right"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Editar informações do cliente</button>
                   </div>
                   </div>
                   <div class="tab-pane fade" id="custom-tabs-four-contato" role="tabpanel" aria-labelledby="custom-tabs-four-contato-tab">
@@ -309,9 +277,14 @@ $(document).ready(function() {
               </div>
             </div>
             <div class="card-body">
-              <div class="row" style="display: inline !important;line-height: 9px;">
-                <p class="card-text" style="font-size: .9em;"><span class="font-weight-bold">CPF: </span>999.999.999-99</p>
-                <p class="card-text" style="font-size: .9em;"><span class="font-weight-bold">Login: </span>lifreitas</p>
+              <div class="row" style="line-height: 9px;">
+              <dl class="row mt-4" style="text-transform: uppercase;">
+                <dt class="col-sm-4">CPF:</dt>
+                <dd class="col-sm-8">284.132.918-60</dd>
+                <dt class="col-sm-4">RG:</dt>
+                <dd class="col-sm-8">27.532.410-2</dd>
+                </dd>
+              </dl>
               </div>
             </div>
             <div class="card-body" style="padding-bottom: 2.8rem;border-top: 1px solid #ccc;">
@@ -359,7 +332,7 @@ $(document).ready(function() {
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title">Agendar novo evento ao sistema</h4>
-        <button type="button" class="Fechar" data-dismiss="modal" aria-label="Fechar">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -382,7 +355,7 @@ $(document).ready(function() {
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title">Editar Cliente</h4>
-        <button type="button" class="Fechar" data-dismiss="modal" aria-label="Fechar">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -461,7 +434,7 @@ $(document).ready(function() {
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title">Cadastrar Novo Endereço de Contato</h4>
-        <button type="button" class="Fechar" data-dismiss="modal" aria-label="Fechar">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
