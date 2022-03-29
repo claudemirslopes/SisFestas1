@@ -154,9 +154,9 @@ $(document).ready(function() {
     </div>
     <!-- /.row -->
     <?php
-    if(isset($_SESSION['<div class="row">msg</div>'])){
-        echo $_SESSION['<div class="row">msg</div>'];
-        unset($_SESSION['<div class="row">msg</div>']);
+    if (isset($_SESSION['msg'])) {
+      echo $_SESSION['msg'];
+      unset($_SESSION['msg']);
     }
     ?>
     <!-- Main row -->
@@ -227,22 +227,21 @@ $(document).ready(function() {
                       <table class="table table-sm table-bordered table-striped">
                       <thead>
                           <tr>
-                          <th>Email</th>
-                          <th>Telefone</th>
-                          <th>Endereço</th>
-                          <th class="text-right">Ações</th>
+                            <th>Telefone</th>
+                            <th>Endereço</th>
                           </tr>
                       </thead>
                       <tbody>
                           <tr>
-                          <td class="text-left">lifreitaslopes@gmail.com</td>
-                          <td class="text-left">(19) 98457-8361</td>
-                          <td class="text-left">Rua João Macário Adella, 35 - Limeira/SP</td>
-                          <td class="text-right"><a title="Editar" href="cliente.html" role="button"><i class="fa fa-pencil-square-o text-info" aria-hidden="true"></i></a>&nbsp;<a title="Excluír" href="#" role="button"><i class="fa fa-trash-o text-danger" aria-hidden="true"></i></a></td>
+                            <td class="text-left">(19) 98457-8361</td>
+                            <td class="text-left">Rua João Macário Adella, 35 - Limeira/SP</td>
+                          </tr>
+                          <tr>
+                            <td class="text-left" colspan="2" style="line-height: 1.5em;background:#F7F8E0;">Morbi turpis dolor, vulputate vitae felis non, tincidunt congue mauris. Phasellus volutpat augue id mi placerat mollis. Vivamus faucibus eu massa eget condimentum. Fusce nec hendrerit sem, ac tristique nulla. Integer vestibulum orci odio.</td>
                           </tr>
                       </tbody>
                       </table>
-                      <button type="button" class="btn btn-info btn-block btn-flat btn-sm mt-2" data-toggle="modal" data-target="#addcontato"><i class="fa fa-plus"></i>&nbsp;&nbsp;&nbsp;Adicionar Contato</button>
+                      <button type="button" class="btn btn-info btn-block btn-flat btn-sm mt-4" data-toggle="modal" data-target="#addcontato"><i class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;&nbsp;Editar Contato</button>
                   </div>
                   </div>
                   <div class="tab-pane fade" id="custom-tabs-four-cobranca" role="tabpanel" aria-labelledby="custom-tabs-four-cobranca-tab">
@@ -359,67 +358,119 @@ $(document).ready(function() {
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form>
-      <div class="modal-body">
-        <div class="form-row">
-          <div class="form-group col-md-8">
-            <label for="inputAddress">Nome</label>
-            <input type="text" class="form-control" value="Eliane Rocha de Freitas Lopes">
-          </div>
-          <div class="form-group col-md-4">
-              <label for="inputAddress">Email</label>
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+      <form action="<?php echo pg; ?>/processa/proc_edit_clientes" method="POST" class="form-horizontal" enctype="multipart/form-data">
+        <input type="hidden" name="id" value="<?php echo $row_cliente['id']; ?>">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-3">
+              <?php if (!empty($row_cliente['foto'])) { ?>
+                <img src="../assets/images/cliente/<?php echo $row_cliente['id']; ?>/<?php echo $row_cliente['foto']; ?>" alt="Foto" class="img-thumbnail mt-2">
+              <?php } else { ?>
+                <img src="../assets/images/usuario/no.jpg" alt="Foto" class="img-thumbnail mt-2">
+              <?php } ?>
+            </div>
+            <div class="col-md-9">
+              <div class="form-row">
+                <div class="form-group col-md-7">
+                  <label for="inputAddress">Nome</label>
+                  <input type="text" class="form-control" id="nome" name="nome" value="<?php
+                                                            if (isset($_SESSION['dados']['nome'])) {
+                                                                echo $_SESSION['dados']['nome'];
+                                                            } elseif (isset($row_cliente['nome'])) {
+                                                                echo $row_cliente['nome'];
+                                                            } ?>">
                 </div>
-                <input type="text" class="form-control">
+                <div class="form-group col-md-5">
+                    <label for="inputAddress">Email</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                      </div>
+                      <input type="email" class="form-control" id="email" name="email" value="<?php
+                                                            if (isset($_SESSION['dados']['email'])) {
+                                                                echo $_SESSION['dados']['email'];
+                                                            } elseif (isset($row_cliente['email'])) {
+                                                                echo $row_cliente['email'];
+                                                            } ?>">
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label for="inputAddress">Usuário</label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                  </div>
+                  <!-- A senha padrão ao editar um usuário é cr2_+usuario atual -->
+                  <input type="hidden" name="senha" class="form-control form-control-sm forp" value="cr2_<?php
+                                                        if (isset($_SESSION['dados']['usuario'])) {
+                                                            echo $_SESSION['dados']['usuario'];
+                                                        } elseif (isset($row_cliente['usuario'])) {
+                                                            echo $row_cliente['usuario'];
+                                                        }
+                                                        ?>">
+                  <input type="text" class="form-control" id="usuario" name="usuario" value="<?php
+                                                            if (isset($_SESSION['dados']['usuario'])) {
+                                                                echo $_SESSION['dados']['usuario'];
+                                                            } elseif (isset($row_cliente['usuario'])) {
+                                                                echo $row_cliente['usuario'];
+                                                            } ?>">
+                </div>
               </div>
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group col-md-6">
-            <label for="inputAddress">Login</label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fas fa-user"></i></span>
+              <div class="form-group col-md-4">
+                <label for="inputAddress">CPF</label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fa fa-id-card-o"></i></span>
+                  </div>
+                  <input type="text" class="form-control cpf" id="cpf" name="cpf" readonly value="<?php
+                                                            if (isset($_SESSION['dados']['cpf'])) {
+                                                                echo $_SESSION['dados']['cpf'];
+                                                            } elseif (isset($row_cliente['cpf'])) {
+                                                                echo $row_cliente['cpf'];
+                                                            } ?>">
+                </div>
               </div>
-              <input type="text" class="form-control" value="lifreitaslopes">
+              <div class="form-group col-md-4">
+                <label for="inputState">RG</label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="far fa-address-card"></i></span>
+                  </div>
+                  <input type="text" class="form-control" id="rg" name="rg" value="<?php
+                                                            if (isset($_SESSION['dados']['rg'])) {
+                                                                echo $_SESSION['dados']['rg'];
+                                                            } elseif (isset($row_cliente['rg'])) {
+                                                                echo $row_cliente['rg'];
+                                                            } ?>">
+                </div>
+              </div>
+              <div class="form-group col-md-5">
+                <label for="inputState">Situação</label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fa fa-<?php echo $row_cliente['situacao'] == 1 ? 'check' : 'times'; ?>"></i></span>
+                  </div>
+                  <select type="text" class="form-control" id="situacao" name="situacao">
+                    <option value="<?php echo $row_cliente['situacao']; ?>"><?php echo $row_cliente['situacao'] == 1 ? 'Ativo' : 'Inativo'; ?></option>
+                    <option value="<?php echo $row_cliente['situacao'] == 1 ? 0 : 1; ?>"><?php echo $row_cliente['situacao'] == 1 ? 'Inativo' : 'Ativo'; ?></option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group col-md-7">
+                <label for="inputEmail4">Foto</label>
+                <input type="hidden" name="foto_antiga" value="<?php echo $row_cliente['foto']; ?>">
+                <input type="file" class="form-control form-control-sm" id="exampleFormControlFile1" name="foto">
+            </div>
+            </div>
             </div>
           </div>
-          <div class="form-group col-md-6">
-            <label for="inputAddress">Senha</label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fas fa-lock"></i></span>
-              </div>
-              <input type="text" class="form-control" value="lulamolusco">
-            </div>
-          </div>
         </div>
-        <div class="form-row">
-          <div class="form-group col-md-4">
-            <label for="inputState">Data de Nascimento</label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-              </div>
-              <input type="text" class="form-control" value="28/11/1971">
-            </div>
-          </div>
-          <div class="form-group col-md-4">
-            <label for="inputState">CPF</label>
-            <input type="text" class="form-control" value="999.999.999-99">
-          </div>
-          <div class="form-group col-md-4">
-            <label for="inputZip">RG</label>
-            <input type="text" class="form-control" value="58.855.585.5">
-          </div>
+        <div class="modal-footer justify-content-between">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+          <input type="submit" class="btn btn-warning" name="SendEditCliente" value="Gravar Informações no Sistema">
         </div>
-      </div>
-      <div class="modal-footer justify-content-between">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-        <button type="submit" class="btn btn-warning"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Gravar Informações no Sistema</button>
-      </div>
       </form>
     </div>
     <!-- /.modal-content -->

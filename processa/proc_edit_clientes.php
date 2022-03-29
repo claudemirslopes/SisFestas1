@@ -65,33 +65,12 @@ if($SendEditCliente){
     </div>";
     }
 
-    //validar senha
-    elseif ((strlen($dados_validos['senha'])) < 6) {
-        $erro = true;
-        $_SESSION['msg'] = "<div class='sufee-alert alert with-close alert-warning alert-dismissible fade show' style='border-left: 4px solid #FFC107;'>
-        <i class='fa fa-exclamation-circle text-warning fa-lg' aria-hidden='true'></i>&nbsp;&nbsp;
-        A senha deve ter no mínimo 6 caracteres!
-        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-            <span aria-hidden='true'>&times;</span>
-        </button>
-    </div>";
-    } elseif (stristr($dados_validos['senha'], "'")) {
-        $erro = true;
-        $_SESSION['msg'] = "<div class='sufee-alert alert with-close alert-warning alert-dismissible fade show' style='border-left: 4px solid #FFC107;'>
-        <i class='fa fa-exclamation-circle text-warning fa-lg' aria-hidden='true'></i>&nbsp;&nbsp;
-        Caracter ( ' ) utilizado na senha inválido!
-        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-            <span aria-hidden='true'>&times;</span>
-        </button>
-    </div>";
-    }
-
-    //Validar usuario
+    //Validar cliente
     elseif (stristr($dados_validos['usuario'], "'")) {
         $erro = true;
         $_SESSION['msg'] = "<div class='sufee-alert alert with-close alert-warning alert-dismissible fade show' style='border-left: 4px solid #FFC107;'>
         <i class='fa fa-exclamation-circle text-warning fa-lg' aria-hidden='true'></i>&nbsp;&nbsp;
-        Caracter ( ' ) utilizado na senha inválido!
+        Caracter ( ' ) utilizado no usuario inválido!
         <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
             <span aria-hidden='true'>&times;</span>
         </button>
@@ -101,67 +80,6 @@ if($SendEditCliente){
         $_SESSION['msg'] = "<div class='sufee-alert alert with-close alert-warning alert-dismissible fade show' style='border-left: 4px solid #FFC107;'>
         <i class='fa fa-exclamation-circle text-warning fa-lg' aria-hidden='true'></i>&nbsp;&nbsp;
         O usuário deve ter no mínimo 6 caracteres!
-        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-            <span aria-hidden='true'>&times;</span>
-        </button>
-    </div>";
-    }
-
-    //validar telefone em branco
-    elseif ((strlen($dados_validos['telefone'])) < 10) {
-        $erro = true;
-        $_SESSION['msg'] = "<div class='sufee-alert alert with-close alert-warning alert-dismissible fade show' style='border-left: 4px solid #FFC107;'>
-        <i class='fa fa-exclamation-circle text-warning fa-lg' aria-hidden='true'></i>&nbsp;&nbsp;
-        O Telefone/Celular deve ter no mínimo 10 caracteres!
-        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-            <span aria-hidden='true'>&times;</span>
-        </button>
-    </div>";
-    }
-    
-
-    //validar CEP em branco
-    elseif ((strlen($dados_validos['cep'])) < 8) {
-        $erro = true;
-        $_SESSION['msg'] = "<div class='sufee-alert alert with-close alert-warning alert-dismissible fade show' style='border-left: 4px solid #FFC107;'>
-        <i class='fa fa-exclamation-circle text-warning fa-lg' aria-hidden='true'></i>&nbsp;&nbsp;
-        O CEP deve ter no mínimo 8 caracteres!
-        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-            <span aria-hidden='true'>&times;</span>
-        </button>
-    </div>";
-    }
-
-    //validar rua em branco
-    elseif ((strlen($dados_validos['rua'])) == '') {
-        $erro = true;
-        $_SESSION['msg'] = "<div class='sufee-alert alert with-close alert-warning alert-dismissible fade show' style='border-left: 4px solid #FFC107;'>
-        <i class='fa fa-exclamation-circle text-warning fa-lg' aria-hidden='true'></i>&nbsp;&nbsp;
-        O campo rua não pode estar em branco!
-        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-            <span aria-hidden='true'>&times;</span>
-        </button>
-    </div>";
-    }
-
-    //validar bairro em branco
-    elseif ((strlen($dados_validos['bairro'])) == '') {
-        $erro = true;
-        $_SESSION['msg'] = "<div class='sufee-alert alert with-close alert-warning alert-dismissible fade show' style='border-left: 4px solid #FFC107;'>
-        <i class='fa fa-exclamation-circle text-warning fa-lg' aria-hidden='true'></i>&nbsp;&nbsp;
-        O campo bairro não pode estar em branco!
-        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-            <span aria-hidden='true'>&times;</span>
-        </button>
-    </div>";
-    }
-
-    //validar cidade em branco
-    elseif ((strlen($dados_validos['cidade'])) == '') {
-        $erro = true;
-        $_SESSION['msg'] = "<div class='sufee-alert alert with-close alert-warning alert-dismissible fade show' style='border-left: 4px solid #FFC107;'>
-        <i class='fa fa-exclamation-circle text-warning fa-lg' aria-hidden='true'></i>&nbsp;&nbsp;
-        O campo cidade não pode estar em branco!
         <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
             <span aria-hidden='true'>&times;</span>
         </button>
@@ -190,9 +108,9 @@ if($SendEditCliente){
     
     else {
         //Proibir cadastro de CPF duplicado
-        $result_usuario = "SELECT id FROM clientes WHERE cpf='" . $dados_validos['cpf'] . "' AND id <> '".$dados['id']."' LIMIT 1";
-        $resultado_usuario = mysqli_query($conn, $result_usuario);
-        if (($resultado_usuario) AND ( $resultado_usuario->num_rows != 0)) {
+        $result_cliente = "SELECT id FROM clientes WHERE cpf='" . $dados_validos['cpf'] . "' AND id <> '".$dados['id']."' LIMIT 1";
+        $resultado_cliente = mysqli_query($conn, $result_cliente);
+        if (($resultado_cliente) AND ( $resultado_cliente->num_rows != 0)) {
             $erro = true;
             $_SESSION['msg'] = "<div class='sufee-alert alert with-close alert-danger alert-dismissible fade show' style='border-left: 4px solid #DC3545;'>
             <i class='fa fa-exclamation-triangle text-danger' aria-hidden='true'></i>&nbsp;&nbsp;
@@ -203,9 +121,9 @@ if($SendEditCliente){
         </div>";
         }
         //Proibir cadastro de usuário duplicado
-        $result_usuario = "SELECT id FROM clientes WHERE usuario='" . $dados_validos['usuario'] . "' AND id <> '".$dados['id']."' LIMIT 1";
-        $resultado_usuario = mysqli_query($conn, $result_usuario);
-        if (($resultado_usuario) AND ( $resultado_usuario->num_rows != 0)) {
+        $result_cliente = "SELECT id FROM clientes WHERE usuario='" . $dados_validos['usuario'] . "' AND id <> '".$dados['id']."' LIMIT 1";
+        $resultado_cliente = mysqli_query($conn, $result_cliente);
+        if (($resultado_cliente) AND ( $resultado_cliente->num_rows != 0)) {
             $erro = true;
             $_SESSION['msg'] = "<div class='sufee-alert alert with-close alert-danger alert-dismissible fade show' style='border-left: 4px solid #DC3545;'>
             <i class='fa fa-exclamation-triangle text-danger' aria-hidden='true'></i>&nbsp;&nbsp;
@@ -216,9 +134,9 @@ if($SendEditCliente){
         </div>";
         }
         //Proibir cadastro de email duplicado
-        $result_usuario_email = "SELECT id FROM clientes WHERE email='" . $dados_validos['email'] . "'  AND id <> '".$dados['id']."'LIMIT 1";
-        $resultado_usuario_email = mysqli_query($conn, $result_usuario_email);
-        if (($resultado_usuario_email) AND ( $resultado_usuario_email->num_rows != 0)) {
+        $result_cliente_email = "SELECT id FROM clientes WHERE email='" . $dados_validos['email'] . "'  AND id <> '".$dados['id']."'LIMIT 1";
+        $resultado_cliente_email = mysqli_query($conn, $result_cliente_email);
+        if (($resultado_cliente_email) AND ( $resultado_cliente_email->num_rows != 0)) {
             $erro = true;
             $_SESSION['msg'] = "<div class='sufee-alert alert with-close alert-warning alert-dismissible fade show' style='border-left: 4px solid #FFC107;'>
             <i class='fa fa-exclamation-circle text-warning' aria-hidden='true'></i>&nbsp;&nbsp;
@@ -245,28 +163,18 @@ if($SendEditCliente){
         
        //Criptografar a senha
         $dados_validos['senha'] = password_hash($dados_validos['senha'], PASSWORD_DEFAULT);
-        $result_usuario = "UPDATE clientes SET
-                id_empresa='" . $dados_validos['id_empresa'] . "', 
+        $result_cliente = "UPDATE clientes SET
                 nome='" . $dados_validos['nome'] . "',
                 email='" . $dados_validos['email'] . "', 
                 usuario='" . $dados_validos['usuario'] . "', 
                 senha='" . $dados_validos['senha'] . "', 
                 cpf='" . $dados_validos['cpf'] . "',
                 rg='" . $dados_validos['rg'] . "',
-                telefone='" . $dados_validos['telefone'] . "',
-                cep='" . $dados_validos['cep'] . "',
-                rua='" . $dados_validos['rua'] . "',
-                numero='" . $dados_validos['numero'] . "',
-                complemento='" . $dados_validos['complemento'] . "',
-                bairro='" . $dados_validos['bairro'] . "',
-                cidade='" . $dados_validos['cidade'] . "',
-                uf='" . $dados_validos['uf'] . "',
                 $campo_foto $valor_foto
-                niveis_acesso_id='" . $dados_validos['niveis_acesso_id'] . "', 
-                situacoes_usuario_id='" . $dados_validos['situacoes_usuario_id'] . "', 
+                situacao='" . $dados_validos['situacao'] . "', 
                 modified=NOW()
                 WHERE id='".$dados_validos['id']."'";
-        $resultado_usuario = mysqli_query($conn, $result_usuario);
+        $resultado_cliente = mysqli_query($conn, $result_cliente);
         if(mysqli_affected_rows($conn)){
             unset($_SESSION['dados']);
             
@@ -278,16 +186,14 @@ if($SendEditCliente){
                 upload($foto, $destino, 200, 200);
             }
             
-            $_SESSION['msg'] = "<div class='alert au-alert-success alert-dismissible fade show au-alert au-alert--70per mb-4' role='alert' style='width:100%;'>
-            <i class='zmdi zmdi-check-circle'></i>
-            <span class='content'>Cliente editado com sucesso.</span>
-            <button class='close' type='button' data-dismiss='alert' aria-label='Close'>
-                <span aria-hidden='true'>
-                    <i class='zmdi zmdi-close-circle'></i>
-                </span>
+            $_SESSION['msg'] = "<div class='sufee-alert alert with-close alert-success alert-dismissible fade show' style='border-left: 4px solid #28A745;'>
+            <i class='fa fa-exclamation-triangle text-success fa-lg' aria-hidden='true'></i>&nbsp;&nbsp;
+            Cliente Editado com sucesso!
+            <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                <span aria-hidden='true'>&times;</span>
             </button>
         </div>";
-            $url_destino = pg . "/listar/list_clientes";
+            $url_destino = pg . "/editar/edit_clientes?id=".$dados['id'];
             header("Location: $url_destino");
         }else{
             $_SESSION['msg'] = "<div class='sufee-alert alert with-close alert-danger alert-dismissible fade show' style='border-left: 4px solid #DC3545;'>
@@ -309,6 +215,6 @@ if($SendEditCliente){
         <span aria-hidden='true'>&times;</span>
     </button>
 </div>";
-    $url_destino = pg . "/listar/list_clientes";
+    $url_destino = pg . "/editar/edit_clientes?id=".$dados['id'];
     header("Location: $url_destino");
 }
