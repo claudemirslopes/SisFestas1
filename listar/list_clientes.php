@@ -302,39 +302,39 @@ $(document).ready(function() {
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="inputEmail4">Nome</label>
-                                <input type="text" name="nome" class="form-control form-control-sm forp" placeholder="Nome completo" value="<?php if (isset($_SESSION['dados']['nome'])) {
+                                <input type="text" name="nome" class="form-control form-control-sm" placeholder="Nome completo" value="<?php if (isset($_SESSION['dados']['nome'])) {
                                     echo $_SESSION['dados']['nome'];
                                 } ?>">
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="inputEmail4">CPF</label>
-                                <input type="text" name="cpf" class="form-control form-control-sm forp cpf" placeholder="CPF" value="<?php if (isset($_SESSION['dados']['cpf'])) {
+                                <input type="text" name="cpf" class="form-control form-control-sm cpf" placeholder="CPF" value="<?php if (isset($_SESSION['dados']['cpf'])) {
                                     echo $_SESSION['dados']['cpf'];
                                 } ?>">
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="inputPassword4">RG</label>
-                                <input type="text" name="rg" class="form-control form-control-sm forp" placeholder="RG" value="<?php if (isset($_SESSION['dados']['rg'])) {
+                                <input type="text" name="rg" class="form-control form-control-sm" placeholder="RG" value="<?php if (isset($_SESSION['dados']['rg'])) {
                                     echo $_SESSION['dados']['rg'];
                                 } ?>">
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="inputPassword4">E-mail</label>
-                                <input type="email" name="email" class="form-control form-control-sm forp" placeholder="E-mail" value="<?php if (isset($_SESSION['dados']['email'])) {
+                                <input type="email" name="email" class="form-control form-control-sm" placeholder="E-mail" value="<?php if (isset($_SESSION['dados']['email'])) {
                                     echo $_SESSION['dados']['email'];
                                 } ?>">
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="inputEmail4">Usuário</label>
-                                <input type="text" name="usuario" class="form-control form-control-sm forp" placeholder="Usuário para logar no sistema" value="<?php if (isset($_SESSION['dados']['usuario'])) {
+                                <input type="text" name="usuario" class="form-control form-control-sm" placeholder="Usuário para logar no sistema" value="<?php if (isset($_SESSION['dados']['usuario'])) {
                                     echo $_SESSION['dados']['usuario'];
                                 } ?>">
                             </div>
                                 <!-- A senha padrão ao cadastrar um cliente é cr2@+mês+ano atual -->
-                                <input type="hidden" name="senha" class="form-control form-control-sm forp" value="sf@<?php echo $hoje; ?>">
+                                <input type="hidden" name="senha" class="form-control form-control-sm" value="sf@<?php echo $hoje; ?>">
                             <div class="form-group col-md-4">
                                 <label for="inputEmail4">Foto</label>
-                                <input type="file" class="form-control form-control-file form-control-sm forp" id="exampleFormControlFile1" name="foto">
+                                <input type="file" class="form-control form-control-file form-control-sm" id="exampleFormControlFile1" name="foto">
                             </div>
                         </div>
                     </fieldset>
@@ -343,25 +343,25 @@ $(document).ready(function() {
                         <div class="form-row">
                             <div class="form-group col-md-3">
                                 <label for="inputEmail4">Telefone/Celular</label>
-                                <input type="text" name="telefone" class="form-control form-control-sm forp form-control form-control-sm forp-sm sp_celphones" placeholder="Telefone/celular" value="<?php if (isset($_SESSION['dados']['telefone'])) {
+                                <input type="text" name="telefone" class="form-control form-control-sm form-control form-control-sm-sm sp_celphones" placeholder="Telefone/celular" value="<?php if (isset($_SESSION['dados']['telefone'])) {
                                     echo $_SESSION['dados']['telefone'];
                                 } ?>">
                             </div>
                             <div class="form-group col-md-2">
                                 <label for="inputEmail4">CEP</label>
-                                <input type="text" name="cep" id="cep" class="form-control form-control-sm forp form-control form-control-sm forp-sm cep" placeholder="CEP" value="<?php if (isset($_SESSION['dados']['cep'])) {
+                                <input type="text" name="cep" id="cep" class="form-control form-control-sm form-control form-control-sm-sm cep" placeholder="CEP" value="<?php if (isset($_SESSION['dados']['cep'])) {
                                     echo $_SESSION['dados']['cep'];
                                 } ?>">
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="inputPassword4">Logradouro</label>
-                                <input type="text" name="rua" id="logradouro" class="form-control form-control-sm forp" placeholder="Rua/Avenida" value="<?php if (isset($_SESSION['dados']['rua'])) {
+                                <input type="text" name="rua" id="logradouro" class="form-control form-control-sm" placeholder="Rua/Avenida" value="<?php if (isset($_SESSION['dados']['rua'])) {
                                     echo $_SESSION['dados']['rua'];
                                 } ?>">
                             </div>
                             <div class="form-group col-md-1">
                                 <label for="inputEmail4">Nº</label>
-                                <input type="number" name="numero" class="form-control form-control-sm forp form-control form-control-sm forp-sm" placeholder="Nº" value="<?php if (isset($_SESSION['dados']['numero'])) {
+                                <input type="number" name="numero" class="form-control form-control-sm form-control form-control-sm-sm" placeholder="Nº" value="<?php if (isset($_SESSION['dados']['numero'])) {
                                     echo $_SESSION['dados']['numero'];
                                 } ?>">
                             </div>
@@ -369,25 +369,25 @@ $(document).ready(function() {
                         <div class="form-row">
                             <div class="form-group col-md-4">
                                 <label for="inputEmail4">Complemento</label>
-                                <input type="text" name="complemento" class="form-control form-control-sm forp form-control form-control-sm forp-sm" placeholder="Complemento" value="<?php if (isset($_SESSION['dados']['complemento'])) {
+                                <input type="text" name="complemento" class="form-control form-control-sm form-control form-control-sm-sm" placeholder="Complemento" value="<?php if (isset($_SESSION['dados']['complemento'])) {
                                     echo $_SESSION['dados']['complemento'];
                                 } ?>">
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="inputPassword4">Bairro</label>
-                                <input type="text" name="bairro" id="bairro" class="form-control form-control-sm forp" placeholder="Bairro" value="<?php if (isset($_SESSION['dados']['bairro'])) {
+                                <input type="text" name="bairro" id="bairro" class="form-control form-control-sm" placeholder="Bairro" value="<?php if (isset($_SESSION['dados']['bairro'])) {
                                     echo $_SESSION['dados']['bairro'];
                                 } ?>">
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="inputPassword4">Cidade</label>
-                                <input type="text" name="cidade" id="cidade" class="form-control form-control-sm forp cidade" placeholder="Cidade" value="<?php if (isset($_SESSION['dados']['cidade'])) {
+                                <input type="text" name="cidade" id="cidade" class="form-control form-control-sm cidade" placeholder="Cidade" value="<?php if (isset($_SESSION['dados']['cidade'])) {
                                     echo $_SESSION['dados']['cidade'];
                                 } ?>">
                             </div>
                             <div class="form-group col-md-2">
                                 <label for="inputEmail4">Estado</label>
-                                <select name="uf" id="uf" class="form-control form-control-sm forp custom-select">
+                                <select name="uf" id="uf" class="form-control form-control-sm custom-select">
                                     <option value="AC">AC</option>
                                     <option value="AL">AL</option>
                                     <option value="AP">AP</option>
@@ -423,7 +423,7 @@ $(document).ready(function() {
                         <legend class="font-small">&nbsp;&nbsp;<i class="fa fa-info"></i>&nbsp;&nbsp;Observação</legend>
                         <div class="form-row">
                             <div class="form-group col-md-12">
-                                <textarea name="obs" class="form-control form-control-sm forp"><?php if (isset($_SESSION['dados']['obs'])) {
+                                <textarea name="obs" id="editable" class="form-control form-control-sm"><?php if (isset($_SESSION['dados']['obs'])) {
                                     echo $_SESSION['dados']['obs'];
                                 } ?></textarea>
                             </div>

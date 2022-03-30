@@ -227,21 +227,21 @@ $(document).ready(function() {
                       <table class="table table-sm table-bordered table-striped">
                       <thead>
                           <tr>
-                            <th>Telefone</th>
-                            <th>Endereço</th>
+                            <th class="pl-2 pr-2">Telefone</th>
+                            <th class="pl-2 pr-2">Endereço</th>
                           </tr>
                       </thead>
                       <tbody>
                           <tr>
-                            <td class="text-left">(19) 98457-8361</td>
-                            <td class="text-left">Rua João Macário Adella, 35 - Limeira/SP</td>
+                            <td class="text-left pl-2 pr-2"><?php echo $row_cliente['telefone']; ?></td>
+                            <td class="text-left pl-2 pr-2"><?php echo $row_cliente['rua']; ?>, <?php echo $row_cliente['numero']; ?> - <?php echo $row_cliente['bairro']; ?> | <?php echo $row_cliente['cidade']; ?>/<?php echo $row_cliente['uf']; ?></td>
                           </tr>
                           <tr>
-                            <td class="text-left" colspan="2" style="line-height: 1.5em;background:#F7F8E0;">Morbi turpis dolor, vulputate vitae felis non, tincidunt congue mauris. Phasellus volutpat augue id mi placerat mollis. Vivamus faucibus eu massa eget condimentum. Fusce nec hendrerit sem, ac tristique nulla. Integer vestibulum orci odio.</td>
+                            <td class="text-left pl-2 pr-2" colspan="2" style="line-height: 1.5em;background:#F7F8E0;"><?php echo $row_cliente['obs'] == '' ? 'Nenhuma observação': $row_cliente['obs']; ?></td>
                           </tr>
                       </tbody>
                       </table>
-                      <button type="button" class="btn btn-info btn-block btn-flat btn-sm mt-4" data-toggle="modal" data-target="#addcontato"><i class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;&nbsp;Editar Contato</button>
+                      <button type="button" class="btn btn-info btn-block btn-flat btn-sm mt-4" data-toggle="modal" data-target="#editcontato"><i class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;&nbsp;Editar Contato</button>
                   </div>
                   </div>
                   <div class="tab-pane fade" id="custom-tabs-four-cobranca" role="tabpanel" aria-labelledby="custom-tabs-four-cobranca-tab">
@@ -480,99 +480,150 @@ $(document).ready(function() {
 <!-- /.modal -->
 
 <!-- Modal para adicionar um novo contato -->
-<div class="modal fade" id="addcontato">
+<div class="modal fade" id="editcontato">
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Cadastrar Novo Endereço de Contato</h4>
+        <h4 class="modal-title">Editar Contato [Endereço]</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form>
-      <div class="modal-body">
-        <div class="form-row">
-          <div class="form-group col-md-6">
-            <label for="inputAddress">CEP</label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fa fa-location-arrow"></i></span>
+      <form action="<?php echo pg; ?>/processa/proc_edit_clientes2" method="POST" class="form-horizontal" enctype="multipart/form-data">
+        <input type="hidden" name="id" value="<?php echo $row_cliente['id']; ?>">
+        <div class="modal-body">
+          <div class="form-row">
+            <div class="form-group col-md-3">
+              <label for="inputState">Telefone <small>(Fixo ou Celular)</small></label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                </div>
+                <input type="text" class="form-control sp_celphones" id="telefone" name="telefone" value="<?php
+                                                              if (isset($_SESSION['dados']['telefone'])) {
+                                                                  echo $_SESSION['dados']['telefone'];
+                                                              } elseif (isset($row_cliente['telefone'])) {
+                                                                  echo $row_cliente['telefone'];
+                                                              } ?>">
               </div>
-              <input type="text" class="form-control">
+            </div>
+            <div class="form-group col-md-2">
+              <label for="inputAddress">CEP</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fa fa-location-arrow"></i></span>
+                </div>
+                <input type="text" class="form-control cep" id="cep" name="cep" value="<?php
+                                                              if (isset($_SESSION['dados']['cep'])) {
+                                                                  echo $_SESSION['dados']['cep'];
+                                                              } elseif (isset($row_cliente['cep'])) {
+                                                                  echo $row_cliente['cep'];
+                                                              } ?>">
+              </div>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="inputState">Endereço<small>(rua, logradouro)</small></label>
+              <input type="text" class="form-control rua" id="logradouro" name="rua" value="<?php
+                                                              if (isset($_SESSION['dados']['rua'])) {
+                                                                  echo $_SESSION['dados']['rua'];
+                                                              } elseif (isset($row_cliente['rua'])) {
+                                                                  echo $row_cliente['rua'];
+                                                              } ?>">
+            </div>
+            <div class="form-group col-md-1">
+              <label for="inputZip">Nº</label>
+              <input type="text" class="form-control numero" id="numero" name="numero" value="<?php
+                                                              if (isset($_SESSION['dados']['numero'])) {
+                                                                  echo $_SESSION['dados']['numero'];
+                                                              } elseif (isset($row_cliente['numero'])) {
+                                                                  echo $row_cliente['numero'];
+                                                              } ?>">
             </div>
           </div>
-          <div class="form-group col-md-6">
-            <label for="inputState">Telefone <small>(Fixo ou Celular)</small></label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fas fa-phone"></i></span>
-              </div>
-              <input type="text" class="form-control" data-inputmask='"mask": "(999) 999-9999"' data-mask>
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <label for="inputState">Complemento <small> (Apto, casa, outros)</small></label>
+              <input type="text" class="form-control complemento" id="complemento" name="complemento" value="<?php
+                                                              if (isset($_SESSION['dados']['complemento'])) {
+                                                                  echo $_SESSION['dados']['complemento'];
+                                                              } elseif (isset($row_cliente['complemento'])) {
+                                                                  echo $row_cliente['complemento'];
+                                                              } ?>">
+            </div>
+            <div class="form-group col-md-3">
+              <label for="inputZip">Bairro</label>
+              <input type="text" class="form-control bairro" id="bairro" name="bairro" value="<?php
+                                                              if (isset($_SESSION['dados']['bairro'])) {
+                                                                  echo $_SESSION['dados']['bairro'];
+                                                              } elseif (isset($row_cliente['bairro'])) {
+                                                                  echo $row_cliente['bairro'];
+                                                              } ?>">
+            </div>
+            <div class="form-group col-md-3">
+              <label for="inputZip">Cidade</label>
+              <input type="text" class="form-control cidade" id="cidade" name="cidade" value="<?php
+                                                              if (isset($_SESSION['dados']['cidade'])) {
+                                                                  echo $_SESSION['dados']['cidade'];
+                                                              } elseif (isset($row_cliente['cidade'])) {
+                                                                  echo $row_cliente['cidade'];
+                                                              } ?>">
+            </div>
+            <div class="form-group col-md-2">
+              <label for="inputZip">Estado</label>
+              <select class="form-control" name="uf" id="uf">
+                <option value="<?php echo $row_cliente['uf'];?>">
+                  <?php
+                  if (isset($_SESSION['dados']['uf'])) {
+                      echo $_SESSION['dados']['uf'];
+                  } elseif (isset($row_cliente['uf'])) {
+                      echo $row_cliente['uf'];
+                  } ?></option>
+                <option value="AC">Acre</option>
+                <option value="AL">Alagoas</option>
+                <option value="AP">Amapá</option>
+                <option value="AM">Amazonas</option>
+                <option value="BA">Bahia</option>
+                <option value="CE">Ceará</option>
+                <option value="DF">Distrito Federal</option>
+                <option value="ES">Espirito Santo</option>
+                <option value="GO">Goiás</option>
+                <option value="MA">Maranhão</option>
+                <option value="MS">Mato Grosso do Sul</option>
+                <option value="MT">Mato Grosso</option>
+                <option value="MG">Minas Gerais</option>
+                <option value="PA">Pará</option>
+                <option value="PB">Paraíba</option>
+                <option value="PR">Paraná</option>
+                <option value="PE">Pernambuco</option>
+                <option value="PI">Piauí</option>
+                <option value="RJ">Rio de Janeiro</option>
+                <option value="RN">Rio Grande do Norte</option>
+                <option value="RS">Rio Grande do Sul</option>
+                <option value="RO">Rondônia</option>
+                <option value="RR">Roraima</option>
+                <option value="SC">Santa Catarina</option>
+                <option value="SP">São Paulo</option>
+                <option value="SE">Sergipe</option>
+                <option value="TO">Tocantins</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-12">
+                <textarea type="text" name="obs" rows="3" id="editable" class="form-control form-control-sm"><?php
+                        if (isset($_SESSION['dados']['obs'])) {
+                            echo $_SESSION['dados']['obs'];
+                        } elseif (isset($row_cliente['obs'])) {
+                            echo $row_cliente['obs'];
+                        }
+                        ?></textarea>
             </div>
           </div>
         </div>
-        <div class="form-row">
-          <div class="form-group col-md-11">
-            <label for="inputState">Endereço<small>(rua, logradouro)</small></label>
-            <input type="text" class="form-control">
-          </div>
-          <div class="form-group col-md-1">
-            <label for="inputZip">Nº</label>
-            <input type="text" class="form-control">
-          </div>
+        <div class="modal-footer justify-content-between">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+          <input type="submit" class="btn btn-warning" name="SendEditCliente2" value="Gravar Informações no Sistema">
         </div>
-        <div class="form-row">
-          <div class="form-group col-md-4">
-            <label for="inputState">Complemento <small> (Apto, casa, outros)</small></label>
-            <input type="text" class="form-control">
-          </div>
-          <div class="form-group col-md-3">
-            <label for="inputZip">Bairro</label>
-            <input type="text" class="form-control">
-          </div>
-          <div class="form-group col-md-3">
-            <label for="inputZip">Cidade</label>
-            <input type="text" class="form-control">
-          </div>
-          <div class="form-group col-md-2">
-            <label for="inputZip">UF</label>
-            <select class="form-control">
-              <option value="" selected="" disabled="">Selecione...</option>
-              <option value="AC">Acre</option>
-              <option value="AL">Alagoas</option>
-              <option value="AP">Amapá</option>
-              <option value="AM">Amazonas</option>
-              <option value="BA">Bahia</option>
-              <option value="CE">Ceará</option>
-              <option value="DF">Distrito Federal</option>
-              <option value="ES">Espirito Santo</option>
-              <option value="GO">Goiás</option>
-              <option value="MA">Maranhão</option>
-              <option value="MS">Mato Grosso do Sul</option>
-              <option value="MT">Mato Grosso</option>
-              <option value="MG">Minas Gerais</option>
-              <option value="PA">Pará</option>
-              <option value="PB">Paraíba</option>
-              <option value="PR">Paraná</option>
-              <option value="PE">Pernambuco</option>
-              <option value="PI">Piauí</option>
-              <option value="RJ">Rio de Janeiro</option>
-              <option value="RN">Rio Grande do Norte</option>
-              <option value="RS">Rio Grande do Sul</option>
-              <option value="RO">Rondônia</option>
-              <option value="RR">Roraima</option>
-              <option value="SC">Santa Catarina</option>
-              <option value="SP">São Paulo</option>
-              <option value="SE">Sergipe</option>
-              <option value="TO">Tocantins</option>
-            </select>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer justify-content-between">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-        <button type="submit" class="btn btn-warning"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Gravar Informações no Sistema</button>
-      </div>
       </form>
     </div>
     <!-- /.modal-content -->

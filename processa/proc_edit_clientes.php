@@ -188,7 +188,7 @@ if($SendEditCliente){
             
             $_SESSION['msg'] = "<div class='sufee-alert alert with-close alert-success alert-dismissible fade show' style='border-left: 4px solid #28A745;'>
             <i class='fa fa-exclamation-triangle text-success fa-lg' aria-hidden='true'></i>&nbsp;&nbsp;
-            Cliente Editado com sucesso!
+            Cliente editado com sucesso!
             <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
                 <span aria-hidden='true'>&times;</span>
             </button>
