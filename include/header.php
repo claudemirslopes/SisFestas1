@@ -12,7 +12,7 @@
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Tempusdominus Bootstrap 4 -->
-  <link rel="stylesheet" href="<?php echo pg; ?>/assets/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+  <!-- <link rel="stylesheet" href="<?php echo pg; ?>/assets/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css"> -->
   <!-- DataTables -->
   <link rel="stylesheet" href="<?php echo pg; ?>/assets/datatables/datatables-bs4/css/dataTables.bootstrap4.min.css">
   <link rel="stylesheet" href="<?php echo pg; ?>/assets/datatables/datatables-responsive/css/responsive.bootstrap4.min.css">
@@ -20,21 +20,22 @@
   <!-- iCheck -->
   <link rel="stylesheet" href="<?php echo pg; ?>/assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
   <!-- JQVMap -->
-  <link rel="stylesheet" href="<?php echo pg; ?>/assets/plugins/jqvmap/jqvmap.min.css">
+  <!-- <link rel="stylesheet" href="<?php echo pg; ?>/assets/plugins/jqvmap/jqvmap.min.css"> -->
   <!-- Theme style -->
   <link rel="stylesheet" href="<?php echo pg; ?>/assets/dist/css/adminlte.min.css">
   <!-- CSS personalizado -->
   <link rel="stylesheet" href="<?php echo pg; ?>/assets/dist/css/custom.css">
   <!-- Fullcalendar -->
   <link rel="stylesheet" href="<?php echo pg; ?>/assets/dist/css/fullcalendar.min.css">
+  <link rel="stylesheet" href="<?php echo pg; ?>/assets/dist/css/fullcalendar.print.css">
   <!-- Sweet Alert -->
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
   <!-- overlayScrollbars -->
-  <link rel="stylesheet" href="<?php echo pg; ?>/assets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+  <!-- <link rel="stylesheet" href="<?php echo pg; ?>/assets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css"> -->
   <!-- Daterange picker -->
-  <link rel="stylesheet" href="<?php echo pg; ?>/assets/plugins/daterangepicker/daterangepicker.css">
+  <!-- <link rel="stylesheet" href="<?php echo pg; ?>/assets/plugins/daterangepicker/daterangepicker.css"> -->
   <!-- summernote -->
-  <link rel="stylesheet" href="<?php echo pg; ?>/assets/plugins/summernote/summernote-bs4.min.css">
+  <!-- <link rel="stylesheet" href="<?php echo pg; ?>/assets/plugins/summernote/summernote-bs4.min.css"> -->
   <!-- Favicons -->
   <link rel="shortcut icon" type="image/x-icon" href="<?php echo pg; ?>/assets/dist/img/favicon.ico">
   <link rel="apple-touch-icon" sizes="60x60" href="<?php echo pg; ?>/assets/dist/img/apple-icon-64x64.png">

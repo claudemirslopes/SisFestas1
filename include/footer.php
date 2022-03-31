@@ -15,7 +15,6 @@
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
-
 <!-- jQuery -->
 <script src="https://kit.fontawesome.com/a8568f4b07.js" crossorigin="anonymous"></script>
 <script src="<?php echo pg; ?>/assets/plugins/jquery/jquery.min.js"></script>
@@ -46,25 +45,24 @@
 <script src="<?php echo pg; ?>/assets/datatables/datatables-buttons/js/buttons.colVis.min.js"></script>
 <!-- FullCalendar -->
 <script src='<?php echo pg; ?>/assets/dist/js/moment.min.js'></script>
-<script src='<?php echo pg; ?>/assets/dist/js/fullcalendar/fullcalendar.min.js'></script>
 <script src='<?php echo pg; ?>/assets/dist/js/fullcalendar/fullcalendar.js'></script>
 <script src='<?php echo pg; ?>/assets/dist/js/fullcalendar/locale/pt-br.js'></script>
 <!-- Sparkline -->
 <script src="<?php echo pg; ?>/assets/plugins/sparklines/sparkline.js"></script>
 <!-- JQVMap -->
-<script src="<?php echo pg; ?>/assets/plugins/jqvmap/jquery.vmap.min.js"></script>
-<script src="<?php echo pg; ?>/assets/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+<!-- <script src="<?php echo pg; ?>/assets/plugins/jqvmap/jquery.vmap.min.js"></script>
+<script src="<?php echo pg; ?>/assets/plugins/jqvmap/maps/jquery.vmap.usa.js"></script> -->
 <!-- jQuery Knob Chart -->
-<script src="<?php echo pg; ?>/assets/plugins/jquery-knob/jquery.knob.min.js"></script>
+<!-- <script src="<?php echo pg; ?>/assets/plugins/jquery-knob/jquery.knob.min.js"></script> -->
 <!-- daterangepicker -->
-<script src="<?php echo pg; ?>/assets/plugins/moment/moment.min.js"></script>
-<script src="<?php echo pg; ?>/assets/plugins/daterangepicker/daterangepicker.js"></script>
+<!-- <script src="<?php echo pg; ?>/assets/plugins/moment/moment.min.js"></script> -->
+<!-- <script src="<?php echo pg; ?>/assets/plugins/daterangepicker/daterangepicker.js"></script> -->
 <!-- Tempusdominus Bootstrap 4 -->
-<script src="<?php echo pg; ?>/assets/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+<!-- <script src="<?php echo pg; ?>/assets/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script> -->
 <!-- Summernote -->
-<script src="<?php echo pg; ?>/assets/plugins/summernote/summernote-bs4.min.js"></script>
+<!-- <script src="<?php echo pg; ?>/assets/plugins/summernote/summernote-bs4.min.js"></script> -->
 <!-- overlayScrollbars -->
-<script src="<?php echo pg; ?>/assets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+<!-- <script src="<?php echo pg; ?>/assets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script> -->
 <!-- AdminLTE App -->
 <script src="<?php echo pg; ?>/assets/dist/js/adminlte.js"></script>
 <!-- AdminLTE for demo purposes -->
@@ -97,178 +95,101 @@ $(function () {
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
 });
 </script>
+<?php
+$result_events = "SELECT id, title, color, descricao, start, end, idcli FROM events";
+$resultado_events = mysqli_query($conn, $result_events);
+?>
 <script>
-
   $(document).ready(function() {
-
-    var date = new Date();
-       var yyyy = date.getFullYear().toString();
-       var mm = (date.getMonth()+1).toString().length == 1 ? "0"+(date.getMonth()+1).toString() : (date.getMonth()+1).toString();
-       var dd  = (date.getDate()).toString().length == 1 ? "0"+(date.getDate()).toString() : (date.getDate()).toString();
-    
     $('#calendar').fullCalendar({
       header: {
-         language: 'pt-br',
         left: 'prev,next today',
         center: 'title',
-        right: 'month,basicWeek,basicDay,listMonth',
-
+        right: 'month,agendaWeek,agendaDay'
       },
-      defaultDate: yyyy+"-"+mm+"-"+dd,
+      defaultDate: Date(),
+      navLinks: true, // can click day/week names to navigate views
       editable: true,
       eventLimit: true, // allow "more" link when too many events
+      eventClick: function(event) {
+        
+        $('#visualizar #id').text(event.id);
+        $('#visualizar #id').val(event.id);
+        $('#visualizar #title').text(event.title);
+        $('#visualizar #title').val(event.title);
+        $('#visualizar #descricao').text(event.descricao);
+        $('#visualizar #descricao').val(event.descricao);
+        $('#visualizar #start').text(event.start.format('DD/MM/YYYY HH:mm:ss'));
+        $('#visualizar #start').val(event.start.format('DD/MM/YYYY HH:mm:ss'));
+        $('#visualizar #end').text(event.end.format('DD/MM/YYYY HH:mm:ss'));
+        $('#visualizar #end').val(event.end.format('DD/MM/YYYY HH:mm:ss'));
+        $('#visualizar #idcli').text(event.idcli);
+        $('#visualizar #idcli').val(event.idcli);
+        $('#visualizar #color').val(event.color);
+        $('#visualizar').modal('show');
+        return false;
+
+      },
+      
       selectable: true,
       selectHelper: true,
-      select: function(start, end) {
-        
-        $('#ModalAdd #start').val(moment(start).format('YYYY-MM-DD HH:mm:ss'));
-        $('#ModalAdd #end').val(moment(end).format('YYYY-MM-DD HH:mm:ss'));
-        $('#ModalAdd').modal('show');
-      },
-      eventRender: function(event, element) {
-        element.bind('dblclick', function() {
-          $('#ModalEdit #id').val(event.id);
-          $('#ModalEdit #title').val(event.title);
-          $('#ModalEdit #color').val(event.color);
-          $('#ModalEdit').modal('show');
-        });
-      },
-      eventDrop: function(event, delta, revertFunc) { // si changement de position
-
-        edit(event);
-
-      },
-      eventResize: function(event,dayDelta,minuteDelta,revertFunc) { // si changement de longueur
-
-        edit(event);
-
+      select: function(start, end){
+        $('#cadastrar #start').val(moment(start).format('DD/MM/YYYY HH:mm:ss'));
+        $('#cadastrar #end').val(moment(end).format('DD/MM/YYYY HH:mm:ss'));
+        $('#cadastrar').modal('show');						
       },
       events: [
-        {
-          id: '1',
-          title: 'Cas: Rita e Jonas',
-          start: '2021-08-31 08:24:00',
-          end: '2021-08-31 16:55:45',
-          color: '#B40486',
-        },
-        {
-          id: '2',
-          title: 'Festa: Maria Eduarda',
-          start: '2021-09-04 08:24:00',
-          end: '2021-09-04 16:55:45',
-          color: '#0040FF',
-        },
-        {
-          id: '3',
-          title: 'Boleto Pago',
-          start: '2021-09-05 08:24:00',
-          end: '2021-09-05 16:55:45',
-          color: '#088A68',
-        },
-        {
-          id: '4',
-          title: 'Festa: Caio Ortolan',
-          start: '2021-09-05 08:24:00',
-          end: '2021-09-05 16:55:45',
-          color: '#0040FF',
-        },
-        {
-          id: '5',
-          title: 'Boleto Vencido',
-          start: '2021-09-09 14:24:00',
-          end: '2021-09-09 16:55:45',
-          color: '#FE2E2E',
-        },
-        {
-          id: '6',
-          title: 'Boleto Pago',
-          start: '2021-09-13 17:24:00',
-          end: '2021-09-13 16:55:45',
-          color: '#088A68',
-        },
-        {
-          id: '7',
-          title: 'Cas: Maria e João',
-          start: '2021-09-15 08:24:00',
-          end: '2021-09-15 16:55:45',
-          color: '#B40486',
-        },
-        {
-          id: '8',
-          title: 'Boleto Vencido',
-          start: '2021-09-17 19:24:00',
-          end: '2021-09-17 16:55:45',
-          color: '#FE2E2E',
-        },
-        {
-          id: '9',
-          title: 'Festa: Mônica Santos',
-          start: '2021-09-17 08:24:00',
-          end: '2021-09-17 16:55:45',
-          color: '#0040FF',
-        },
-        {
-          id: '10',
-          title: 'Boleto Vencido',
-          start: '2021-09-22 11:24:00',
-          end: '2021-09-22 16:55:45',
-          color: '#FE2E2E',
-        },
-        {
-          id: '11',
-          title: 'Boleto Aberto',
-          start: '2021-09-26 12:24:00',
-          end: '2021-09-26 16:55:45',
-          color: '#DBA901',
-        },
-        {
-          id: '12',
-          title: 'Deb: Sthefanie Laura',
-          start: '2021-09-28 08:24:00',
-          end: '2021-09-28 16:55:45',
-          color: '#4B088A',
-        },
-        {
-          id: '13',
-          title: 'Boleto Aberto',
-          start: '2021-09-30 12:24:00',
-          end: '2021-09-30 16:55:45',
-          color: '#DBA901',
-        },
+        <?php
+          while($row_events = mysqli_fetch_array($resultado_events)){
+            ?>
+            {
+            id: '<?php echo $row_events['id']; ?>',
+            title: '<?php echo $row_events['title']; ?>',
+            descricao: '<?php echo $row_events['descricao']; ?>',
+            start: '<?php echo $row_events['start']; ?>',
+            end: '<?php echo $row_events['end']; ?>',
+            idcli: '<?php echo $row_events['idcli']; ?>',
+            color: '<?php echo $row_events['color']; ?>',
+            },<?php
+          }
+        ?>
       ]
     });
-    
-    function edit(event){
-      start = event.start.format('YYYY-MM-DD HH:mm:ss');
-      if(event.end){
-        end = event.end.format('YYYY-MM-DD HH:mm:ss');
-      }else{
-        end = start;
-      }
-      
-      id =  event.id;
-      
-      Event = [];
-      Event[0] = id;
-      Event[1] = start;
-      Event[2] = end;
-      
-      $.ajax({
-       url: 'editEventDate.php',
-       type: "POST",
-       data: {Event:Event},
-       success: function(rep) {
-          if(rep == 'OK'){
-            alert('Inserção realizada com sucesso');
-          }else{
-            alert('Não foi possível gravar, Tentar novamente!.'); 
-          }
-        }
-      });
+  });
+  
+  //Mascara para o campo data e hora
+  function DataHora(evento, objeto){
+    var keypress=(window.event)?event.keyCode:evento.which;
+    campo = eval (objeto);
+    if (campo.value == '00/00/0000 00:00:00'){
+      campo.value=""
     }
     
-  });
-
+    caracteres = '0123456789';
+    separacao1 = '/';
+    separacao2 = ' ';
+    separacao3 = ':';
+    conjunto1 = 2;
+    conjunto2 = 5;
+    conjunto3 = 10;
+    conjunto4 = 13;
+    conjunto5 = 16;
+    if ((caracteres.search(String.fromCharCode (keypress))!=-1) && campo.value.length < (19)){
+      if (campo.value.length == conjunto1 )
+      campo.value = campo.value + separacao1;
+      else if (campo.value.length == conjunto2)
+      campo.value = campo.value + separacao1;
+      else if (campo.value.length == conjunto3)
+      campo.value = campo.value + separacao2;
+      else if (campo.value.length == conjunto4)
+      campo.value = campo.value + separacao3;
+      else if (campo.value.length == conjunto5)
+      campo.value = campo.value + separacao3;
+    }else{
+      event.returnValue = false;
+    }
+  }
 </script>
+
 </body>
 </html>
