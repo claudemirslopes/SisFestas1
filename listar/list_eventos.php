@@ -25,7 +25,7 @@ if (!isset($seguranca)) {
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0">Usuários</h1>
+                <h1 class="m-0">Calendário de Eventos</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -44,11 +44,12 @@ if (!isset($seguranca)) {
     <!-- Box pequeno (caixa estática) -->
         <div class="row">
             <div class="col-md-12">
-                <div class="card card-danger card-outline">
+                <div class="card card-success card-outline">
                     <div class="card-header">
                         <strong class="card-title">Todos os eventos:</strong>
                         <div class="float-right">
                             <!-- Carregar o botão de cadatrar -->
+                            <a href="#"><button type="button" class="btn btn-outline-dark btn-sm" data-toggle="modal" data-target="#listar"><i class="fa fa-list" aria-hidden="true"></i>&nbsp;&nbsp; Listar Eventos</button></a>
                             <a href="#" type="button" class="btn btn-outline-danger btn-sm" title="Página anterior" onclick="voltar()">
                                 <i class="fa fa-angle-left" aria-hidden="true"></i></a>
                                 <script>
@@ -81,139 +82,135 @@ if (!isset($seguranca)) {
                             $inicio = ($qnt_result_pg * $pagina) - $qnt_result_pg;
 
                             if ($_SESSION['niveis_acesso_id'] == 1) {
-                                $result_evento = "SELECT e.id ide, e.title, e.start, e.idcli, c.id idc, c.nome
+                                $result_evento = "SELECT e.id ide, e.title, e.descricao, e.start, e.idcli, c.id idc, c.nome
                                     FROM events e
                                     INNER JOIN clientes c on c.id=e.idcli 
-                                    ORDER BY e.id DESC
+                                    ORDER BY e.start DESC
                                     LIMIT $inicio, $qnt_result_pg";
                             } else {
-                                $result_evento = "SELECT e.id, e.title, e.start, e.idcli, c.id, c.nome
+                                $result_evento = "SELECT e.id, e.title, e.descricao, e.start, e.idcli, c.id, c.nome
                                 FROM events e
                                 INNER JOIN clientes c on c.id=e.idcli 
                                     WHERE ordem > '".$_SESSION['ordem']."'
-                                    ORDER BY e.id DESC
+                                    ORDER BY e.start DESC
                                     LIMIT $inicio, $qnt_result_pg";
                             }
 
                             $resultado_evento = mysqli_query($conn, $result_evento);
                             ?>                            
-                            <table id="example1" class="table table-sm table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Cliente</th>
-                                        <th>Título</th>
-                                        <th class="hidden-sm">Data</th>
-                                        <th class="text-right">Ações</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    while ($row_evento = mysqli_fetch_array($resultado_evento)) {
-                                        //echo $row_evento['nome'] . "<br>";
-                                    ?>
-                                        <script>
-                                            function confirmExcluir(id)
-                                                {
-                                                swal({
-                                                    title: "Excluir",
-                                                    text: "Confirma a exclusão do evento?",
-                                                    type: "error",
-                                                    showCancelButton: true,
-                                                    confirmButtonClass: 'btn-success',
-                                                    confirmButtonText: 'Sim',
-                                                    cancelButtonText: 'Não',
-                                                    closeOnConfirm: false
-                                                }, function () {
-                                                    window.location.href = '../processa/proc_apagar_eventos?id=' + id;   
-                                                });
-                                                }
-                                        </script>
-                                        <tr>
-                                            <td><?php echo $row_evento['ide']; ?></td>
-                                            <td><?php echo $row_evento['nome']; ?></td>
-                                            <td><?php echo $row_evento['title']; ?></td>
-                                            <td class="hidden-sm"><?php echo $row_evento['start']; ?></td>
-                                            <td class="text-right">  
-                                                <?php if ($botao_apagar) { ?>
-                                                    <a href="javascript:;" onclick="confirmExcluir(<?php echo $row_evento['ide']?>)"><i class='fa fa-trash text-danger mr-2' aria-hidden='true' title='Excluir'></i></a>   
-                                                <?php } ?>                            
-                                            </td>
-                                        </tr>
-                                    <?php }  ?>
-                                </tbody>
-                            </table>
+                            <!-- <section class="col-lg-12 connectedSortable mb-4"> -->
+                                <div id="calendar" class="col-centered" style="margin-top: -15px;"></div>
+                            <!-- </section> -->
                         </div>
                     </div>
-                </div>  
-                
-                <div class="card  card-success card-outline">
-                  <div class="row">
-                      <section class="col-lg-12 connectedSortable mb-4">
-                          <div id="calendar" class="col-centered"></div>
-                      </section>
-                  </div>
-                </div>              
+                </div>                
             </div>
         </div>
     </div>
 </section>
 
-<!-- Início do Modal do FullCalendar - Editar registro de Eventos -->
-<div id="visualizar" class="modal fade" role="dialog">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Editar Evento</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form method="POST" action="" enctype="multipart/form-data" style="font-size: .9em;">
-              <div class="form-row">
-                <div class="form-group col-md-10">
-                  <label for="inputEmail4">Título</label>
-                  <input type="text" name="title" id="title" class="form-control" placeholder="Título" style="font-size: .9em;">
-                </div>
-                <div class="form-group col-md-2">
-                  <label for="inputEmail4">Cor</label>
-                  <input type="color" name="color" id="color" class="form-control" style="font-size: .9em;">
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="form-group col-md-6">
-                  <label for="inputEmail4">Início</label>
-                  <input type="text" name="start" id="start" class="form-control" style="font-size: .9em;" onKeyPress="DataHora(event, this)">
-                </div>
-                <div class="form-group col-md-6">
-                  <label for="inputEmail4">Final</label>
-                  <input type="text" name="end" id="end" class="form-control" style="font-size: .9em;" onKeyPress="DataHora(event, this)">
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="form-group col-md-12">
-                  <label for="inputEmail4">Descrição</label>
-                  <textarea name="descricao" id="descricao" class="form-control" style="font-size: .9em;"></textarea>
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="col-sm-offset-2 col-sm-10">
-                  <div class="checkbox">
-                  <label class="text-danger"><input type="checkbox"  name="delete"> Eliminar Evento</label>
-                  </div>
-                </div>
-              </div>
-          </div>
-          <input type="hidden" name="id" class="form-control" id="id">
-          <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-            <button type="submit" class="btn btn-success">Salvar evento</button>
-          </div>
-            </form>
-        </div>
+<div id="listar" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Listar Eventos</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table id="example1" class="table table-sm table-striped">
+            <thead>
+                <tr>
+                    <th class="hidden-sm">Data do Evento</th>
+                    <th>Cliente</th>
+                    <th>Título</th>
+                    <th>Descrição</th>
+                    <!-- <th class="text-right">Ações</th> -->
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                while ($row_evento = mysqli_fetch_array($resultado_evento)) {
+                    //echo $row_evento['nome'] . "<br>";
+                ?>
+                    <tr>
+                        <td class="hidden-sm"><?php echo date('d/m/Y', strtotime($row_evento['start'])); ?></td>
+                        <td><?php echo $row_evento['nome']; ?></td>
+                        <td><?php echo $row_evento['title']; ?></td>
+                        <td><?php echo $row_evento['descricao']; ?></td>
+                        <!-- <td class="text-right">  
+                            <?php if ($botao_apagar) { ?>
+                                <a href="javascript:;" data-toggle="modal" data-target="#visualizar"><i class='fa fa-trash text-danger mr-2' aria-hidden='true' title='Excluir'></i></a>   
+                            <?php } ?>                            
+                        </td> -->
+                    </tr>
+                <?php }  ?>
+            </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        
       </div>
     </div>
+  </div>
+</div>
+
+<!-- Início do Modal do FullCalendar - Editar registro de Eventos -->
+<div id="visualizar" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Editar Evento</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="POST" action="" enctype="multipart/form-data" style="font-size: .9em;">
+          <div class="form-row">
+            <div class="form-group col-md-10">
+              <label for="inputEmail4">Título</label>
+              <input type="text" name="title" id="title" class="form-control" placeholder="Título" style="font-size: .9em;">
+            </div>
+            <div class="form-group col-md-2">
+              <label for="inputEmail4">Cor</label>
+              <input type="color" name="color" id="color" class="form-control" style="font-size: .9em;">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="inputEmail4">Início</label>
+              <input type="text" name="start" id="start" class="form-control" style="font-size: .9em;" onKeyPress="DataHora(event, this)">
+            </div>
+            <div class="form-group col-md-6">
+              <label for="inputEmail4">Final</label>
+              <input type="text" name="end" id="end" class="form-control" style="font-size: .9em;" onKeyPress="DataHora(event, this)">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label for="inputEmail4">Descrição</label>
+              <textarea name="descricao" id="descricao" class="form-control" style="font-size: .9em;"></textarea>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-sm-offset-2 col-sm-10">
+              <div class="checkbox">
+              <label class="text-danger"><input type="checkbox"  name="delete"> Eliminar Evento</label>
+              </div>
+            </div>
+          </div>
+      </div>
+      <input type="hidden" name="id" class="form-control" id="id">
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+        <button type="submit" class="btn btn-success">Salvar evento</button>
+      </div>
+        </form>
+    </div>
+  </div>
+</div>
     <!-- Final do Modal do FullCalendar - Editar registro de Eventos -->
 
     <!-- Início do Modal do FullCalendar - Adicionar registro de Eventos -->

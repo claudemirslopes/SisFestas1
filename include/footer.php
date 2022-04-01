@@ -103,9 +103,10 @@ $resultado_events = mysqli_query($conn, $result_events);
   $(document).ready(function() {
     $('#calendar').fullCalendar({
       header: {
+        language: 'pt-br',
         left: 'prev,next today',
         center: 'title',
-        right: 'month,agendaWeek,agendaDay'
+        right: 'month,basicWeek,basicDay',
       },
       defaultDate: Date(),
       navLinks: true, // can click day/week names to navigate views

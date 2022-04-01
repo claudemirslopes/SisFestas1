@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 01-Abr-2022 às 12:12
+-- Tempo de geração: 01-Abr-2022 às 22:15
 -- Versão do servidor: 10.4.22-MariaDB
 -- versão do PHP: 7.4.27
 
@@ -60,7 +60,7 @@ INSERT INTO `clientes` (`id`, `nome`, `email`, `usuario`, `senha`, `cpf`, `rg`, 
 (1, 'Claudemir da Silva Lopes', 'claudemir.slopes@hotmail.com', 'claudemir', '$2y$10$CaPIIT.zHJiGK3yUO7MbleuvUOZRU16xxshtAHNiQT8mjdAHrL6D.', '284.132.918-60', '275324102', '(19) 98457-8361', '13483-332', 'Rua Guido José Bellon', '358', '', 'Parque Residencial Abílio Pedro', 'Limeira', 'SP', NULL, NULL, '1622326928532.png', NULL, 1, '2022-02-23 11:15:44', '2022-03-28 09:21:24'),
 (2, 'Eliane Rocha de Freitas Lopes', 'lifreitaslopes@gmail.com', 'lifreitas', '$2y$10$fFVUC7KVoHtDnTrcxjZFGe5y6oyIIDGQ6JDDzByXkznYK4PN6jMSC', '964.301.686-20', '547899541', '(19) 98457-8361', '13482-050', 'Rua Francisco Orlando Stocco', '258', 'fundos', 'Jardim Ouro Verde', 'Limeira', 'SP', NULL, NULL, '1622327057853.png', NULL, 1, '2022-02-23 11:19:13', '2022-03-12 08:39:32'),
 (3, 'Luke Skywalker Lopes', 'luke@luke.com', 'lukesky', '$2y$10$fNxfvvnQE4Tc3MD3fCWsZOVy96RfCDW.LewAocxoqWJ8i2ab1MF/W', '284.132.918-60', '25874587', '(19) 98457-8361', '13487-185', 'Rua Rúbens Quadros', '358', 'Casa', 'Jardim Anhangüera', 'Limeira', 'SP', NULL, NULL, 'img-20210423-wa0011.jpg', '<p>Usu&aacute;rio apenas para testes no sistema de cadastro</p>', 0, '2022-03-25 17:05:00', '2022-03-30 08:50:41'),
-(4, 'Rogério Moura', 'rogerio.moura@hotmail.com', 'rogerio.moura', '$2y$10$yqug7Ieeo2oAvgROuho3su57acx/WCZy0X9J51pDFFA/uaqeEUaJq', '425.073.670-91', '4587789965', '(13) 98457-8361', '13487-185', 'Rua Rúbens Quadros', '255', '', 'Jardim Anhangüera', 'Limeira', 'SP', NULL, NULL, '20161208-095924.jpg', '', 1, '2022-03-25 17:10:07', '2022-03-29 17:11:55');
+(4, 'Rogério Moura', 'rogerio.moura@hotmail.com', 'rogerio.moura', '$2y$10$BlVqOc.ectVfH6lNAd/7Mea7MTubaVRg7pO0GOkZgPbSfu/vOvCeW', '425.073.670-91', '4587789965', '(13) 98457-8361', '13487-185', 'Rua Rúbens Quadros', '255', '', 'Jardim Anhangüera', 'Limeira', 'SP', NULL, NULL, '20161208-095924.jpg', '', 1, '2022-03-25 17:10:07', '2022-04-01 09:39:49');
 
 -- --------------------------------------------------------
 
@@ -85,8 +85,13 @@ CREATE TABLE `events` (
 --
 
 INSERT INTO `events` (`id`, `title`, `color`, `descricao`, `start`, `end`, `idcli`, `created`, `modified`) VALUES
-(1, 'Apenas Teste', '#ff0000', 'Evento para testes no sistema', '2022-03-30 17:50:39', '2022-03-30 17:50:41', 1, '2022-03-30 17:50:45', NULL),
-(2, 'Mais um Evento de Teste', '#358475', 'Mais um evento para testes', '2022-03-31 11:09:50', '2022-03-31 11:09:51', 2, '2022-03-31 11:09:57', NULL);
+(1, 'MeetUP da KaBuM', '#4155b9', 'Evento para os funcionários da KaBuM', '2022-04-01 00:00:00', '2022-04-02 00:00:00', 1, '2022-04-01 11:52:11', '2022-04-01 15:56:44'),
+(2, 'Baile da terceira idade', '#265714', 'Bailão da terceira idade do baile', '2022-04-06 00:00:00', '2022-04-07 00:00:00', 3, '2022-04-01 11:56:53', '2022-04-01 14:13:46'),
+(3, 'Festa da filha Priscila', '#ee5353', 'Festa de 15 anos da filha Priscila', '2022-04-04 00:00:00', '2022-04-05 00:00:00', 2, '2022-04-01 11:58:48', '2022-04-01 11:59:18'),
+(4, 'Show de Tiririca', '#56c8c0', 'Show do palhaço e deputado Tiririca', '2022-04-13 00:00:00', '2022-04-14 00:00:00', 4, '2022-04-01 12:00:31', NULL),
+(5, 'Reunião Herbalife', '#c2cf17', 'Reunião semanal do pessoal da herbalife', '2022-04-01 00:00:00', '2022-04-02 00:00:00', 1, '2022-04-01 12:01:42', NULL),
+(6, 'Festa da cachorrada', '#a0188e', 'Esta é uma festa da cachorrada', '2022-04-08 00:00:00', '2022-04-09 00:00:00', 3, '2022-04-01 12:13:31', '2022-04-01 12:13:47'),
+(7, 'Torneio de Buraco', '#91c77a', 'Torneio de buraco entre comunidades', '2022-04-18 00:00:00', '2022-04-19 00:00:00', 4, '2022-04-01 14:29:17', '2022-04-01 14:29:32');
 
 -- --------------------------------------------------------
 
@@ -304,7 +309,19 @@ INSERT INTO `niveis_acessos_paginas` (`id`, `niveis_acesso_id`, `pagina_id`, `pe
 (153, 1, 38, 1, 38, '2022-03-31 17:45:03', NULL),
 (154, 2, 38, 2, 38, '2022-03-31 17:45:03', NULL),
 (155, 3, 38, 2, 38, '2022-03-31 17:45:04', NULL),
-(156, 4, 38, 2, 38, '2022-03-31 17:45:04', NULL);
+(156, 4, 38, 2, 38, '2022-03-31 17:45:04', NULL),
+(157, 1, 39, 1, 39, '2022-04-01 09:10:58', NULL),
+(158, 2, 39, 2, 39, '2022-04-01 09:10:58', NULL),
+(159, 3, 39, 2, 39, '2022-04-01 09:10:58', NULL),
+(160, 4, 39, 2, 39, '2022-04-01 09:10:58', NULL),
+(161, 1, 40, 1, 40, '2022-04-01 09:50:26', NULL),
+(162, 2, 40, 2, 40, '2022-04-01 09:50:26', NULL),
+(163, 3, 40, 2, 40, '2022-04-01 09:50:26', NULL),
+(164, 4, 40, 2, 40, '2022-04-01 09:50:26', NULL),
+(165, 1, 41, 1, 41, '2022-04-01 09:55:06', NULL),
+(166, 2, 41, 2, 41, '2022-04-01 09:55:06', NULL),
+(167, 3, 41, 2, 41, '2022-04-01 09:55:07', NULL),
+(168, 4, 41, 2, 41, '2022-04-01 09:55:07', NULL);
 
 -- --------------------------------------------------------
 
@@ -363,7 +380,10 @@ INSERT INTO `paginas` (`id`, `endereco`, `nome_pagina`, `obs`, `created`, `modif
 (35, 'processa/proc_cad_clientes', 'Processo de Cadastrar Clientes', 'Processo de cadastro de clientes no sistema', '2022-03-25 14:38:58', '2022-03-25 16:03:21'),
 (36, 'processa/proc_edit_clientes', 'Processo de Edição de Clientes', 'Processa a edição de clientes no sistema', '2022-03-26 09:30:47', NULL),
 (37, 'processa/proc_edit_clientes2', 'Processo de Edição de Endereço Cliente', 'Processo de edição de endereço cliente', '2022-03-30 08:11:00', NULL),
-(38, 'processa/proc_cad_evento', 'Processo de Cadastro de Evento', 'Processo de cadastro de evento', '2022-03-31 17:45:03', NULL);
+(38, 'processa/proc_cad_evento', 'Processo de Cadastro de Evento', 'Processo de cadastro de evento', '2022-03-31 17:45:03', NULL),
+(39, 'processa/proc_edit_evento', 'Processo de Edição de Evento', 'Processa a edição do evento', '2022-04-01 09:10:58', NULL),
+(40, 'listar/list_eventos', 'Listar Eventos', 'Listar todos os eventos', '2022-04-01 09:50:25', NULL),
+(41, 'processa/proc_apagar_eventos', 'Processo de Apagar Eventos', 'Processo de exclusão de eventos', '2022-04-01 09:55:06', NULL);
 
 -- --------------------------------------------------------
 
@@ -489,7 +509,7 @@ ALTER TABLE `clientes`
 -- AUTO_INCREMENT de tabela `events`
 --
 ALTER TABLE `events`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de tabela `logos`
@@ -507,13 +527,13 @@ ALTER TABLE `niveis_acessos`
 -- AUTO_INCREMENT de tabela `niveis_acessos_paginas`
 --
 ALTER TABLE `niveis_acessos_paginas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=157;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=169;
 
 --
 -- AUTO_INCREMENT de tabela `paginas`
 --
 ALTER TABLE `paginas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT de tabela `situacoes_usuarios`

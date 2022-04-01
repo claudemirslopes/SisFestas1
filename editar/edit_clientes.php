@@ -173,10 +173,10 @@ $(document).ready(function() {
                   <a class="nav-link" id="custom-tabs-four-contato-tab" data-toggle="pill" href="#custom-tabs-four-contato" role="tab" aria-controls="custom-tabs-four-contato" aria-selected="false">Contato</a>
                   </li>
                   <li class="nav-item">
-                  <a class="nav-link" id="custom-tabs-four-cobranca-tab" data-toggle="pill" href="#custom-tabs-four-cobranca" role="tab" aria-controls="custom-tabs-four-cobranca" aria-selected="false">Cobrança</a>
+                  <a class="nav-link" id="custom-tabs-four-evento-tab" data-toggle="pill" href="#custom-tabs-four-evento" role="tab" aria-controls="custom-tabs-four-evento" aria-selected="false">Eventos</a>
                   </li>
                   <li class="nav-item">
-                  <a class="nav-link" id="custom-tabs-four-pacote-tab" data-toggle="pill" href="#custom-tabs-four-pacote" role="tab" aria-controls="custom-tabs-four-pacote" aria-selected="false">Pacote</a>
+                  <a class="nav-link" id="custom-tabs-four-cobranca-tab" data-toggle="pill" href="#custom-tabs-four-cobranca" role="tab" aria-controls="custom-tabs-four-cobranca" aria-selected="false">Cobrança</a>
                   </li>
                   <li class="nav-item">
                   <a class="nav-link" id="custom-tabs-four-mensagem-tab" data-toggle="pill" href="#custom-tabs-four-mensagem" role="tab" aria-controls="custom-tabs-four-mensagem" aria-selected="false">Mensagens</a>
@@ -190,11 +190,8 @@ $(document).ready(function() {
               <div class="tab-content mt-4" id="custom-tabs-four-tabContent">
                   <div class="tab-pane fade show active" id="custom-tabs-four-dados" role="tabpanel" aria-labelledby="custom-tabs-four-dados-tab">
                   <div class="card-body">
-                      <div class="form-row">
-                          <div class="form-group col-md-4">
-                          <button type="button" data-toggle="modal" data-target="#newevent" class="btn btn-primary">Agendar Evento&nbsp;&nbsp;&nbsp;<i class="fa fa-calendar" aria-hidden="true"></i></button>
-                          </div>
-                      </div>
+                        <div class="form-row mb-2">
+                        </div>
                         <div class="row">
                           <div class="col-lg-3">
                             <?php if (!empty($row_cliente['foto'])) { ?>
@@ -244,11 +241,43 @@ $(document).ready(function() {
                       <button type="button" class="btn btn-info btn-block btn-flat btn-sm mt-4" data-toggle="modal" data-target="#editcontato"><i class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;&nbsp;Editar Contato</button>
                   </div>
                   </div>
+                  <div class="tab-pane fade" id="custom-tabs-four-evento" role="tabpanel" aria-labelledby="custom-tabs-four-evento-tab">
+                    <div class="card-body">
+                      <table class="table table-sm table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th class="hidden-sm">Data do Evento</th>
+                                <th>Título</th>
+                                <th>Descrição</th>
+                                <th class="text-right">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $result_events = "SELECT * FROM events 
+                            WHERE idcli= ".$id."
+                            ORDER BY start DESC";
+                            $resultado_events = mysqli_query($conn, $result_events);
+                            while ($row_events = mysqli_fetch_array($resultado_events)) {
+                                //echo $row_evento['nome'] . "<br>";
+                            ?>
+                                <tr>
+                                    <td class="hidden-sm"><?php echo date('d/m/Y', strtotime($row_events['start'])); ?></td>
+                                    <td><?php echo $row_events['title']; ?></td>
+                                    <td><?php echo $row_events['descricao']; ?></td>
+                                    <td class="text-right">  
+                                      <a href="javascript:;" data-toggle="modal" data-target="#visualizar"><i class='fa fa-pencil-square-o text-primary mr-2' aria-hidden='true' title='Excluir'></i></a>
+                                      <a href="javascript:;" data-toggle="modal" data-target="#visualizar"><i class='fa fa-trash text-danger mr-2' aria-hidden='true' title='Excluir'></i></a>                         
+                                    </td>
+                                </tr>
+                            <?php }  ?>
+                        </tbody>
+                    </table>
+                    <button type="button" class="btn btn-success btn-block btn-flat btn-sm mt-4" data-toggle="modal" data-target="#addevent"><i class="fa fa-calendar"></i>&nbsp;&nbsp;&nbsp;Adicionar Evento</button>
+                    </div>
+                  </div>
                   <div class="tab-pane fade" id="custom-tabs-four-cobranca" role="tabpanel" aria-labelledby="custom-tabs-four-cobranca-tab">
                       Morbi turpis dolor, vulputate vitae felis non, tincidunt congue mauris. Phasellus volutpat augue id mi placerat mollis. Vivamus faucibus eu massa eget condimentum. Fusce nec hendrerit sem, ac tristique nulla. Integer vestibulum orci odio. Cras nec augue ipsum. Suspendisse ut velit condimentum, mattis urna a, malesuada nunc. Curabitur eleifend facilisis velit finibus tristique. Nam vulputate, eros non luctus efficitur, ipsum odio volutpat massa, sit amet sollicitudin est libero sed ipsum. Nulla lacinia, ex vitae gravida fermentum, lectus ipsum gravida arcu, id fermentum metus arcu vel metus. Curabitur eget sem eu risus tincidunt eleifend ac ornare magna.
-                  </div>
-                  <div class="tab-pane fade" id="custom-tabs-four-pacote" role="tabpanel" aria-labelledby="custom-tabs-four-pacote-tab">
-                      Pellentesque vestibulum commodo nibh nec blandit. Maecenas neque magna, iaculis tempus turpis ac, ornare sodales tellus. Mauris eget blandit dolor. Quisque tincidunt venenatis vulputate. Morbi euismod molestie tristique. Vestibulum consectetur dolor a vestibulum pharetra. Donec interdum placerat urna nec pharetra. Etiam eget dapibus orci, eget aliquet urna. Nunc at consequat diam. Nunc et felis ut nisl commodo dignissim. In hac habitasse platea dictumst. Praesent imperdiet accumsan ex sit amet facilisis.
                   </div>
                   <div class="tab-pane fade" id="custom-tabs-four-mensagem" role="tabpanel" aria-labelledby="custom-tabs-four-mensagem-tab">
                       Pellentesque vestibulum commodo nibh nec blandit. Maecenas neque magna, iaculis tempus turpis ac, ornare sodales tellus. Mauris eget blandit dolor. Quisque tincidunt venenatis vulputate. Morbi euismod molestie tristique. Vestibulum consectetur dolor a vestibulum pharetra. Donec interdum placerat urna nec pharetra. Etiam eget dapibus orci, eget aliquet urna. Nunc at consequat diam. Nunc et felis ut nisl commodo dignissim. In hac habitasse platea dictumst. Praesent imperdiet accumsan ex sit amet facilisis.
@@ -327,7 +356,7 @@ $(document).ready(function() {
 
 <!-- Modal para novo evento -->
 <div class="modal fade" id="newevent">
-  <div class="modal-dialog modal-lg">
+  <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title">Agendar novo evento ao sistema</h4>
