@@ -1,8 +1,5 @@
 <?php
-
-if (!isset($seguranca)) {
-    exit;
-}
+if(!isset($seguranca)){exit;}
 
 $SendCadcliente = filter_input(INPUT_POST, 'SendCadcliente', FILTER_SANITIZE_STRING);
 if ($SendCadcliente) {

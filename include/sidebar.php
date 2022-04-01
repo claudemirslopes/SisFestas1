@@ -84,7 +84,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="<?php echo pg; ?>/listar/list_eventos" class="nav-link">
               <i class="nav-icon fa fa-calendar"></i>
               <p>
                 Eventos

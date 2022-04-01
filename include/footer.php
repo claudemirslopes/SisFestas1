@@ -123,8 +123,6 @@ $resultado_events = mysqli_query($conn, $result_events);
         $('#visualizar #start').val(event.start.format('DD/MM/YYYY HH:mm:ss'));
         $('#visualizar #end').text(event.end.format('DD/MM/YYYY HH:mm:ss'));
         $('#visualizar #end').val(event.end.format('DD/MM/YYYY HH:mm:ss'));
-        $('#visualizar #idcli').text(event.idcli);
-        $('#visualizar #idcli').val(event.idcli);
         $('#visualizar #color').val(event.color);
         $('#visualizar').modal('show');
         return false;
@@ -148,7 +146,6 @@ $resultado_events = mysqli_query($conn, $result_events);
             descricao: '<?php echo $row_events['descricao']; ?>',
             start: '<?php echo $row_events['start']; ?>',
             end: '<?php echo $row_events['end']; ?>',
-            idcli: '<?php echo $row_events['idcli']; ?>',
             color: '<?php echo $row_events['color']; ?>',
             },<?php
           }

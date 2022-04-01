@@ -1,5 +1,6 @@
 <?php
 if(!isset($seguranca)){exit;}
+
 //Recuperar o valor do botao
 $SendEditCliente2 = filter_input(INPUT_POST, 'SendEditCliente2', FILTER_SANITIZE_STRING);
 //Botão vazio redireciona para o listar

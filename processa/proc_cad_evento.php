@@ -1,8 +1,6 @@
 <?php
-session_start();
-
-//Incluir conexao com BD
-include_once(pg."../config/conexao.php");
+// var_dump($_POST);
+if(!isset($seguranca)){exit;}
 
 $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING);
 $color = filter_input(INPUT_POST, 'color', FILTER_SANITIZE_STRING);
@@ -11,7 +9,7 @@ $start = filter_input(INPUT_POST, 'start', FILTER_SANITIZE_STRING);
 $end = filter_input(INPUT_POST, 'end', FILTER_SANITIZE_STRING);
 $idcli = filter_input(INPUT_POST, 'idcli', FILTER_SANITIZE_STRING);
 
-if(!empty($title) && !empty($color) && !empty($descricao) && !empty($start) && !empty($end) && !empty($idcli)){
+if(isset($title) && isset($color) && isset($descricao) && isset($start) && isset($end) && isset($idcli)){
 	//Converter a data e hora do formato brasileiro para o formato do Banco de Dados
 	$data = explode(" ", $start);
 	list($date, $hora) = $data;
@@ -31,13 +29,16 @@ if(!empty($title) && !empty($color) && !empty($descricao) && !empty($start) && !
 	//Verificar se salvou no banco de dados através "mysqli_insert_id" o qual verifica se existe o ID do último dado inserido
 	if(mysqli_insert_id($conn)){
 		$_SESSION['msg'] = "<div class='alert alert-success' role='alert'>O Evento Cadastrado com Sucesso<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
-		header("Location: index.php");
+		$url_destino = pg . "listar/list_eventos";
+		header("Location: $url_destino");
 	}else{
 		$_SESSION['msg'] = "<div class='alert alert-danger' role='alert'>Erro ao cadastrar o evento <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
-		header("Location: index.php");
+		$url_destino = pg . "listar/list_eventos";
+		header("Location: $url_destino");
 	}
 	
 }else{
 	$_SESSION['msg'] = "<div class='alert alert-danger' role='alert'>Erro ao cadastrar o evento <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
-	header("Location: index.php");
+	$url_destino = pg . "listar/list_eventos";
+	header("Location: $url_destino");
 }
