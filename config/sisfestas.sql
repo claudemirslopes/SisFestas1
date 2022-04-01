@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 25-Mar-2022 às 21:44
+-- Tempo de geração: 01-Abr-2022 às 12:12
 -- Versão do servidor: 10.4.22-MariaDB
 -- versão do PHP: 7.4.27
 
@@ -57,11 +57,36 @@ CREATE TABLE `clientes` (
 --
 
 INSERT INTO `clientes` (`id`, `nome`, `email`, `usuario`, `senha`, `cpf`, `rg`, `telefone`, `cep`, `rua`, `numero`, `complemento`, `bairro`, `cidade`, `uf`, `recuperar_senha`, `chave_descadastro`, `foto`, `obs`, `situacao`, `created`, `modified`) VALUES
-(1, 'Claudemir da Silva Lopes', 'claudemir.slopes@hotmail.com', 'claudemir', '$2y$10$CaPIIT.zHJiGK3yUO7MbleuvUOZRU16xxshtAHNiQT8mjdAHrL6D.', '284.132.918-60', '275324102', '(19) 98457-8361', '13483-332', 'Rua Guido José Bellon', '358', '', 'Parque Residencial Abílio Pedro', 'Limeira', 'SP', NULL, NULL, 'fotosite.jpg', NULL, 1, '2022-02-23 11:15:44', '2022-03-12 08:25:56'),
+(1, 'Claudemir da Silva Lopes', 'claudemir.slopes@hotmail.com', 'claudemir', '$2y$10$CaPIIT.zHJiGK3yUO7MbleuvUOZRU16xxshtAHNiQT8mjdAHrL6D.', '284.132.918-60', '275324102', '(19) 98457-8361', '13483-332', 'Rua Guido José Bellon', '358', '', 'Parque Residencial Abílio Pedro', 'Limeira', 'SP', NULL, NULL, '1622326928532.png', NULL, 1, '2022-02-23 11:15:44', '2022-03-28 09:21:24'),
 (2, 'Eliane Rocha de Freitas Lopes', 'lifreitaslopes@gmail.com', 'lifreitas', '$2y$10$fFVUC7KVoHtDnTrcxjZFGe5y6oyIIDGQ6JDDzByXkznYK4PN6jMSC', '964.301.686-20', '547899541', '(19) 98457-8361', '13482-050', 'Rua Francisco Orlando Stocco', '258', 'fundos', 'Jardim Ouro Verde', 'Limeira', 'SP', NULL, NULL, '1622327057853.png', NULL, 1, '2022-02-23 11:19:13', '2022-03-12 08:39:32'),
-(3, 'Luke Skywalker Lopes', 'luke@luke.com', 'lukesky', '$2y$10$a93XTvtsKJROKaTLm4Q3.uPcQ.1GULrhWx6SuxoXolVgBgf/J86pm', '284.132.918-60', '25874587', '(19) 98457-8361', '13483-332', 'Rua Guido José Bellon', '358', '', 'Parque Residencial Abílio Pedro', 'Limeira', 'SP', NULL, NULL, NULL, 'Usuário apenas para testes no sistema de cadastro', 0, '2022-03-25 17:05:00', NULL),
-(4, 'Rogério Moura', 'rogerio.moura@hotmail.com', 'rogerio.moura', '$2y$10$cmzVaqR1oD0kLnUYyPVwzOrE4loASel3nv2/cpF21BvTWG1BR45Na', '425.073.670-91', '4587789965', '(13) 98457-8361', '13487-185', 'Rua Rúbens Quadros', '255', '', 'Jardim Anhangüera', 'Limeira', 'SP', NULL, NULL, 'img-20210423-wa0011.jpg', '', 1, '2022-03-25 17:10:07', NULL),
-(5, 'Lilian Doida Moura', 'lilianadoida@hotquente.com', 'lilianadoida', '$2y$10$e28NQAgTK6wC3CSnDGWZEuI2iU50v66XbdSvosvBpk526EzL1wr2G', '844.174.350-90', '278545877', '(15) 45897-8999', '13483-333', 'Rua Edeméia Brandão de Oliveira', '258', '', 'Parque Residencial Abílio Pedro', 'Limeira', 'SP', NULL, NULL, NULL, '', 1, '2022-03-25 17:33:31', NULL);
+(3, 'Luke Skywalker Lopes', 'luke@luke.com', 'lukesky', '$2y$10$fNxfvvnQE4Tc3MD3fCWsZOVy96RfCDW.LewAocxoqWJ8i2ab1MF/W', '284.132.918-60', '25874587', '(19) 98457-8361', '13487-185', 'Rua Rúbens Quadros', '358', 'Casa', 'Jardim Anhangüera', 'Limeira', 'SP', NULL, NULL, 'img-20210423-wa0011.jpg', '<p>Usu&aacute;rio apenas para testes no sistema de cadastro</p>', 0, '2022-03-25 17:05:00', '2022-03-30 08:50:41'),
+(4, 'Rogério Moura', 'rogerio.moura@hotmail.com', 'rogerio.moura', '$2y$10$yqug7Ieeo2oAvgROuho3su57acx/WCZy0X9J51pDFFA/uaqeEUaJq', '425.073.670-91', '4587789965', '(13) 98457-8361', '13487-185', 'Rua Rúbens Quadros', '255', '', 'Jardim Anhangüera', 'Limeira', 'SP', NULL, NULL, '20161208-095924.jpg', '', 1, '2022-03-25 17:10:07', '2022-03-29 17:11:55');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `events`
+--
+
+CREATE TABLE `events` (
+  `id` int(11) NOT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `color` varchar(7) DEFAULT NULL,
+  `descricao` mediumtext DEFAULT NULL,
+  `start` datetime DEFAULT NULL,
+  `end` datetime DEFAULT NULL,
+  `idcli` int(11) DEFAULT NULL,
+  `created` datetime NOT NULL DEFAULT current_timestamp(),
+  `modified` datetime DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Tabela de eventos listados no fullcalendar' ROW_FORMAT=DYNAMIC;
+
+--
+-- Extraindo dados da tabela `events`
+--
+
+INSERT INTO `events` (`id`, `title`, `color`, `descricao`, `start`, `end`, `idcli`, `created`, `modified`) VALUES
+(1, 'Apenas Teste', '#ff0000', 'Evento para testes no sistema', '2022-03-30 17:50:39', '2022-03-30 17:50:41', 1, '2022-03-30 17:50:45', NULL),
+(2, 'Mais um Evento de Teste', '#358475', 'Mais um evento para testes', '2022-03-31 11:09:50', '2022-03-31 11:09:51', 2, '2022-03-31 11:09:57', NULL);
 
 -- --------------------------------------------------------
 
@@ -267,7 +292,19 @@ INSERT INTO `niveis_acessos_paginas` (`id`, `niveis_acesso_id`, `pagina_id`, `pe
 (141, 1, 35, 1, 35, '2022-03-25 14:38:58', NULL),
 (142, 2, 35, 2, 35, '2022-03-25 14:38:58', NULL),
 (143, 3, 35, 2, 35, '2022-03-25 14:38:58', NULL),
-(144, 4, 35, 2, 35, '2022-03-25 14:38:58', NULL);
+(144, 4, 35, 2, 35, '2022-03-25 14:38:58', NULL),
+(145, 1, 36, 1, 36, '2022-03-26 09:30:47', NULL),
+(146, 2, 36, 2, 36, '2022-03-26 09:30:47', NULL),
+(147, 3, 36, 2, 36, '2022-03-26 09:30:47', NULL),
+(148, 4, 36, 2, 36, '2022-03-26 09:30:47', NULL),
+(149, 1, 37, 1, 37, '2022-03-30 08:11:01', NULL),
+(150, 2, 37, 2, 37, '2022-03-30 08:11:01', NULL),
+(151, 3, 37, 2, 37, '2022-03-30 08:11:01', NULL),
+(152, 4, 37, 2, 37, '2022-03-30 08:11:01', NULL),
+(153, 1, 38, 1, 38, '2022-03-31 17:45:03', NULL),
+(154, 2, 38, 2, 38, '2022-03-31 17:45:03', NULL),
+(155, 3, 38, 2, 38, '2022-03-31 17:45:04', NULL),
+(156, 4, 38, 2, 38, '2022-03-31 17:45:04', NULL);
 
 -- --------------------------------------------------------
 
@@ -323,7 +360,10 @@ INSERT INTO `paginas` (`id`, `endereco`, `nome_pagina`, `obs`, `created`, `modif
 (32, 'listar/list_clientes', 'Listar Clientes', 'Listar clientes do sistema', '2022-03-11 16:31:46', NULL),
 (33, 'editar/edit_clientes', 'Editar Clientes', 'Editar clientes no sistema', '2022-03-11 17:25:45', NULL),
 (34, 'processa/proc_apagar_clientes', 'Processo de Apagar Cliente', 'Processa a exclusão de cliente', '2022-03-11 17:26:21', NULL),
-(35, 'processa/proc_cad_clientes', 'Processo de Cadastrar Clientes', 'Processo de cadastro de clientes no sistema', '2022-03-25 14:38:58', '2022-03-25 16:03:21');
+(35, 'processa/proc_cad_clientes', 'Processo de Cadastrar Clientes', 'Processo de cadastro de clientes no sistema', '2022-03-25 14:38:58', '2022-03-25 16:03:21'),
+(36, 'processa/proc_edit_clientes', 'Processo de Edição de Clientes', 'Processa a edição de clientes no sistema', '2022-03-26 09:30:47', NULL),
+(37, 'processa/proc_edit_clientes2', 'Processo de Edição de Endereço Cliente', 'Processo de edição de endereço cliente', '2022-03-30 08:11:00', NULL),
+(38, 'processa/proc_cad_evento', 'Processo de Cadastro de Evento', 'Processo de cadastro de evento', '2022-03-31 17:45:03', NULL);
 
 -- --------------------------------------------------------
 
@@ -389,6 +429,13 @@ ALTER TABLE `clientes`
   ADD PRIMARY KEY (`id`) USING BTREE;
 
 --
+-- Índices para tabela `events`
+--
+ALTER TABLE `events`
+  ADD PRIMARY KEY (`id`) USING BTREE,
+  ADD KEY `FK1_eventempresa` (`idcli`) USING BTREE;
+
+--
 -- Índices para tabela `logos`
 --
 ALTER TABLE `logos`
@@ -436,7 +483,13 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de tabela `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT de tabela `events`
+--
+ALTER TABLE `events`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de tabela `logos`
@@ -454,13 +507,13 @@ ALTER TABLE `niveis_acessos`
 -- AUTO_INCREMENT de tabela `niveis_acessos_paginas`
 --
 ALTER TABLE `niveis_acessos_paginas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=145;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=157;
 
 --
 -- AUTO_INCREMENT de tabela `paginas`
 --
 ALTER TABLE `paginas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT de tabela `situacoes_usuarios`
@@ -477,6 +530,12 @@ ALTER TABLE `usuarios`
 --
 -- Restrições para despejos de tabelas
 --
+
+--
+-- Limitadores para a tabela `events`
+--
+ALTER TABLE `events`
+  ADD CONSTRAINT `FK1_empCli` FOREIGN KEY (`idcli`) REFERENCES `clientes` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Limitadores para a tabela `niveis_acessos_paginas`
