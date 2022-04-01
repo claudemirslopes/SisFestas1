@@ -49,7 +49,6 @@ if (!isset($seguranca)) {
                         <strong class="card-title">Todos os eventos:</strong>
                         <div class="float-right">
                             <!-- Carregar o botão de cadatrar -->
-                            <a href="#"><button type="button" class="btn btn-outline-dark btn-sm" data-toggle="modal" data-target="#modalCadUser"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;&nbsp; Cadastrar</button></a>
                             <a href="#" type="button" class="btn btn-outline-danger btn-sm" title="Página anterior" onclick="voltar()">
                                 <i class="fa fa-angle-left" aria-hidden="true"></i></a>
                                 <script>
@@ -149,12 +148,12 @@ if (!isset($seguranca)) {
                 </div>  
                 
                 <div class="card  card-success card-outline">
-                        <div class="row">
-                            <section class="col-lg-12 connectedSortable mb-4">
-                                <div id="calendar" class="col-centered"></div>
-                            </section>
-                        </div>
-                    </div>              
+                  <div class="row">
+                      <section class="col-lg-12 connectedSortable mb-4">
+                          <div id="calendar" class="col-centered"></div>
+                      </section>
+                  </div>
+                </div>              
             </div>
         </div>
     </div>
@@ -171,7 +170,7 @@ if (!isset($seguranca)) {
             </button>
           </div>
           <div class="modal-body">
-            <form method="POST" action="<?php echo pg; ?>/processa/proc_edit_evento.php" enctype="multipart/form-data" style="font-size: .9em;">
+            <form method="POST" action="" enctype="multipart/form-data" style="font-size: .9em;">
               <div class="form-row">
                 <div class="form-group col-md-10">
                   <label for="inputEmail4">Título</label>
@@ -228,7 +227,7 @@ if (!isset($seguranca)) {
             </button>
           </div>
           <div class="modal-body">
-            <form  method="POST" action="<?php echo pg; ?>/processa/proc_cad_evento.php" enctype="multipart/form-data" style="font-size: .9em;">
+            <form  method="POST" action="" enctype="multipart/form-data" style="font-size: .9em;">
               <div class="form-row">
                 <div class="form-group col-md-12">
                   <label for="inputEmail4">Cliente</label>
@@ -280,3 +279,134 @@ if (!isset($seguranca)) {
       </div>
     </div>
     <!-- Final do Modal do FullCalendar - Adicionar registro de Eventos -->
+
+<?php
+$id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);
+$title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING);
+$color = filter_input(INPUT_POST, 'color', FILTER_SANITIZE_STRING);
+$descricao = filter_input(INPUT_POST, 'descricao', FILTER_SANITIZE_STRING);
+$start = filter_input(INPUT_POST, 'start', FILTER_SANITIZE_STRING);
+$end = filter_input(INPUT_POST, 'end', FILTER_SANITIZE_STRING);
+
+if(!empty($id) && !empty($title) && !empty($color) && !empty($descricao) && !empty($start) && !empty($end)){
+	//Converter a data e hora do formato brasileiro para o formato do Banco de Dados
+	$data = explode(" ", $start);
+	list($date, $hora) = $data;
+	$data_sem_barra = array_reverse(explode("/", $date));
+	$data_sem_barra = implode("-", $data_sem_barra);
+	$start_sem_barra = $data_sem_barra . " " . $hora;
+	
+	$data = explode(" ", $end);
+	list($date, $hora) = $data;
+	$data_sem_barra = array_reverse(explode("/", $date));
+	$data_sem_barra = implode("-", $data_sem_barra);
+	$end_sem_barra = $data_sem_barra . " " . $hora;
+	
+	$result_events = "UPDATE events SET title='$title', color='$color', descricao='$descricao', start='$start_sem_barra', end='$end_sem_barra' WHERE id='$id'"; 
+	$resultado_events = mysqli_query($conn, $result_events);
+	
+	//Verificar se alterou no banco de dados através "mysqli_affected_rows"
+	if(mysqli_affected_rows($conn)){
+		$_SESSION['msg'] = "<div class='sufee-alert alert with-close alert-success alert-dismissible fade show' style='border-left: 4px solid #28A745;'>
+    <i class='fa fa-check-circle text-success fa-lg' aria-hidden='true'></i>&nbsp;&nbsp;
+    Evento editado com sucesso!
+    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+        <span aria-hidden='true'>&times;</span>
+    </button>
+</div>";
+		$url_destino = pg . "/listar/list_eventos";
+		header("Location: $url_destino");
+	}else{
+		$_SESSION['msg'] = "<div class='sufee-alert alert with-close alert-danger alert-dismissible fade show' style='border-left: 4px solid #DC3545;'>
+    <i class='fa fa-exclamation-triangle text-danger fa-lg' aria-hidden='true'></i>&nbsp;&nbsp;
+    Erro ao tentar editar evento!
+    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+        <span aria-hidden='true'>&times;</span>
+    </button>
+</div>";
+		$url_destino = pg . "/listar/list_eventos";
+		header("Location: $url_destino");
+	}
+}
+?>
+<?php
+
+$title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING);
+$color = filter_input(INPUT_POST, 'color', FILTER_SANITIZE_STRING);
+$descricao = filter_input(INPUT_POST, 'descricao', FILTER_SANITIZE_STRING);
+$start = filter_input(INPUT_POST, 'start', FILTER_SANITIZE_STRING);
+$end = filter_input(INPUT_POST, 'end', FILTER_SANITIZE_STRING);
+$idcli = filter_input(INPUT_POST, 'idcli', FILTER_SANITIZE_STRING);
+
+if(isset($title) && isset($color) && isset($descricao) && isset($start) && isset($end) && isset($idcli)){
+	//Converter a data e hora do formato brasileiro para o formato do Banco de Dados
+	$data = explode(" ", $start);
+	list($date, $hora) = $data;
+	$data_sem_barra = array_reverse(explode("/", $date));
+	$data_sem_barra = implode("-", $data_sem_barra);
+	$start_sem_barra = $data_sem_barra . " " . $hora;
+	
+	$data = explode(" ", $end);
+	list($date, $hora) = $data;
+	$data_sem_barra = array_reverse(explode("/", $date));
+	$data_sem_barra = implode("-", $data_sem_barra);
+	$end_sem_barra = $data_sem_barra . " " . $hora;
+	
+	$result_events = "INSERT INTO events (title, color, descricao, start, end, idcli) VALUES ('$title', '$color', '$descricao', '$start_sem_barra', '$end_sem_barra', '$idcli')";
+	$resultado_events = mysqli_query($conn, $result_events);
+	
+	//Verificar se salvou no banco de dados através "mysqli_insert_id" o qual verifica se existe o ID do último dado inserido
+	if(mysqli_insert_id($conn)){
+		$_SESSION['msg'] = "<div class='sufee-alert alert with-close alert-success alert-dismissible fade show' style='border-left: 4px solid #28A745;'>
+    <i class='fa fa-check-circle text-success fa-lg' aria-hidden='true'></i>&nbsp;&nbsp;
+    Evento cadastrado com sucesso!
+    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+        <span aria-hidden='true'>&times;</span>
+    </button>
+</div>";
+		$url_destino = pg . "/listar/list_eventos";
+		header("Location: $url_destino");
+	}else{
+		$_SESSION['msg'] = "<div class='sufee-alert alert with-close alert-danger alert-dismissible fade show' style='border-left: 4px solid #DC3545;'>
+    <i class='fa fa-exclamation-triangle text-danger fa-lg' aria-hidden='true'></i>&nbsp;&nbsp;
+    Erro ao tentar cadastrar evento!
+    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+        <span aria-hidden='true'>&times;</span>
+    </button>
+</div>";
+		$url_destino = pg . "/listar/list_eventos";
+		header("Location: $url_destino");
+	}
+}
+?>
+
+<?php
+if (isset($_POST['delete']) && isset($_POST['id'])){
+        //Apagar a empresa
+        $result_empresa_del = "DELETE FROM events WHERE id = '$id'";
+        $resultado_empresa_del = mysqli_query($conn, $result_empresa_del);
+        if (mysqli_affected_rows($conn)) {
+          $_SESSION['msg'] = "<div class='sufee-alert alert with-close alert-success alert-dismissible fade show' style='border-left: 4px solid #28A745;'>
+          <i class='fa fa-check-circle text-success fa-lg' aria-hidden='true'></i>&nbsp;&nbsp;
+          Evento excluído com sucesso!
+          <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+              <span aria-hidden='true'>&times;</span>
+          </button>
+      </div>";
+          $url_destino = pg . "/listar/list_eventos";
+          header("Location: $url_destino");
+        } else {
+          if ($res == false) {
+            $_SESSION['msg'] = "<div class='sufee-alert alert with-close alert-danger alert-dismissible fade show' style='border-left: 4px solid #DC3545;'>
+            <i class='fa fa-exclamation-triangle text-danger fa-lg' aria-hidden='true'></i>&nbsp;&nbsp;
+            Erro ao tentar ecluir evento!
+            <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                <span aria-hidden='true'>&times;</span>
+            </button>
+        </div>";
+		        $url_destino = pg . "/listar/list_eventos";
+		        header("Location: $url_destino");
+        }
+  }
+}
+?>

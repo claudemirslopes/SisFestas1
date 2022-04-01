@@ -137,9 +137,7 @@ $resultado_events = mysqli_query($conn, $result_events);
         $('#cadastrar').modal('show');						
       },
       events: [
-        <?php
-          while($row_events = mysqli_fetch_array($resultado_events)){
-            ?>
+        <?php while($row_events = mysqli_fetch_array($resultado_events)){ ?>
             {
             id: '<?php echo $row_events['id']; ?>',
             title: '<?php echo $row_events['title']; ?>',
@@ -147,9 +145,8 @@ $resultado_events = mysqli_query($conn, $result_events);
             start: '<?php echo $row_events['start']; ?>',
             end: '<?php echo $row_events['end']; ?>',
             color: '<?php echo $row_events['color']; ?>',
-            },<?php
-          }
-        ?>
+            },
+        <?php } ?>
       ]
     });
   });
